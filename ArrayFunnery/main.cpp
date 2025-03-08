@@ -50,14 +50,14 @@ int main() {
 	cin >> degrees;
 
 	while (cin.get()) {
-		if (cin.get() == 'd') {
+		if (cin.get() == 'k') {
 			break;
 		}
 		rotate(point);
 		screen1[originrow(point.first)][origincol(point.second)] = " 0";
 		cout << "point x" << point.second << endl;
 		cout << "point y" << point.first << endl;
-		cout << "iteration: " << iterations << ". submit d to display" << endl;
+		cout << "iteration: " << iterations << ". submit 'ok' to display" << endl;
 		++iterations;
 	}
 
