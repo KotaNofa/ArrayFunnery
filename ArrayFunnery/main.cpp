@@ -5,8 +5,11 @@
 
 using namespace std;
 
-const int rows = 300;
-const int cols = 300;
+const int rows = 240;
+const int cols = 240;
+
+int degrees = 0;
+int iterations = 0;
 
 string screen1[rows][cols];
 
@@ -24,7 +27,7 @@ int origincol(int index) {
 }
 
 void rotate(pair<int, int>& coords) {
-    double angle = 3 * (M_PI / 180.0);  // Rotation by 1 degree
+    double angle = degrees * (M_PI / 180.0);  // Rotation by 1 degree
     int x = coords.second;
     int y = coords.first;
     coords.second = static_cast<int>(x * cos(angle) - y * sin(angle));
@@ -42,24 +45,27 @@ int main() {
 
 	screen1[origincol(0)][originrow(0)] = " o";
 
-	cout << "start frame, press enter" << endl;
+	cout << "start frame, hold enter" << endl;
+	cout << "select rotation amount per iteration" << endl;
+	cin >> degrees;
+
 	while (cin.get()) {
+		if (cin.get() == 'd') {
+			break;
+		}
 		rotate(point);
 		screen1[originrow(point.first)][origincol(point.second)] = " 0";
 		cout << "point x" << point.second << endl;
 		cout << "point y" << point.first << endl;
+		cout << "iteration: " << iterations << ". submit d to display" << endl;
+		++iterations;
+	}
 
-		for (int i = 0; i < rows; ++i) {
-			for (int j = 0; j < cols; ++j) {
-				cout << screen1[i][j];
-			}
-			cout <<  endl;
+	for (int i = 0; i < rows; ++i) {
+		for (int j = 0; j < cols; ++j) {
+			cout << screen1[i][j];
 		}
-
-		cout << "end frame, press enter" << endl;
-
-		
-
+		cout << endl;
 	}
 
 	return 0;
