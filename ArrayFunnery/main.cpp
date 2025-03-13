@@ -4,18 +4,19 @@
 #include <vector>
 #include "raylib.h"
 #include "ThreeDee.h"
+#include "globals.h"
+#include "Screen.h"
 
 using namespace std;
 
-int width = 1080;
-int height = 1080;
-const char* title = "THREEDEE";
+
 
 int main() {
     InitWindow(width, height, title);
     SetTargetFPS(60);
 
     Cube cube;
+    Cube bruh;
 
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -25,20 +26,16 @@ int main() {
         cube.DrawCubePoints(1);
         cube.DrawCubeLines();
 
+        bruh.DrawCubePoints(1);
+        bruh.DrawCubeLines();
+
         EndDrawing();
 
-        if (IsKeyDown(KEY_J)) {
-            cube.YRotation(5);
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+            cube.YRotation(GetMouseDelta().x * 0.075);
+            cube.XRotation(GetMouseDelta().y * 0.075);
         }
-        if (IsKeyDown(KEY_L)) {
-            cube.YRotation(-5);
-        }
-        if (IsKeyDown(KEY_I)) {
-            cube.XRotation(5);
-        }
-        if (IsKeyDown(KEY_K)) {
-            cube.XRotation(-5);
-        }
+
         if (IsKeyDown(KEY_U)) {
             cube.ZRotation(5);
         }
@@ -47,16 +44,16 @@ int main() {
         }
 
         if (IsKeyDown(KEY_W)) {
-            cube.ZTranslate(-5); 
+            cube.ZTranslate(-5);
         }
         if (IsKeyDown(KEY_S)) {
-            cube.ZTranslate(5); 
+            cube.ZTranslate(5);
         }
         if (IsKeyDown(KEY_A)) {
-            cube.XTranslate(5); 
+            cube.XTranslate(5);
         }
         if (IsKeyDown(KEY_D)) {
-            cube.XTranslate(-5);  
+            cube.XTranslate(-5);
         }
         if (IsKeyDown(KEY_SPACE)) {
             cube.YTranslate(-5); 

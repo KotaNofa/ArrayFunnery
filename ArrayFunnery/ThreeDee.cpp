@@ -2,13 +2,14 @@
 #include <cmath>
 #include "ThreeDee.h"
 #include "raylib.h"
+#include "globals.h"
 
 ThreeDee::ThreeDee() {
 	X = 0.0;
 	Y = 0.0;
 	Z = 0.0;
-	Xindex = 1080 / 2 + X;
-	Yindex = 1080 / 2 - Y;
+	Xindex = width / 2 + X;
+	Yindex = height / 2 - Y;
 }
 
 ThreeDee::ThreeDee(double inX, double inY, double inZ) {
@@ -17,8 +18,8 @@ ThreeDee::ThreeDee(double inX, double inY, double inZ) {
 	Y = inY;
 	Z = inZ;
 
-	Xindex = 1080 / 2 + X;
-	Yindex = 1080 / 2 - Y;
+	Xindex = width / 2 + X;
+	Yindex = height / 2 - Y;
 
 }
 
@@ -32,8 +33,8 @@ void ThreeDee::DrawPoint(int size)
 	float Xproj = (X / Zclamped) * FOV;
 	float Yproj = (Y / Zclamped) * FOV;
 
-	Xindex = 1080 / 2 + Xproj;
-	Yindex = 1080 / 2 - Yproj;
+	Xindex = width / 2 + Xproj;
+	Yindex = height / 2 - Yproj;
 
 	DrawCircle(Xindex, Yindex, size, BLACK);
 }
