@@ -14,7 +14,7 @@ public:
 
 	ThreeDee();
 	ThreeDee(double inX, double inY, double inZ);
-	void DrawPoint();
+	void DrawPoint(int size);
 	void XRotation(double degrees);
 	void YRotation(double degrees);
 	void ZRotation(double degrees);

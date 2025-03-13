@@ -22,7 +22,7 @@ ThreeDee::ThreeDee(double inX, double inY, double inZ) {
 
 }
 
-void ThreeDee::DrawPoint()
+void ThreeDee::DrawPoint(int size)
 {
 	float FOV = 500;
 	float ZNear = 1.0f;
@@ -35,7 +35,7 @@ void ThreeDee::DrawPoint()
 	Xindex = 1080 / 2 + Xproj;
 	Yindex = 1080 / 2 - Yproj;
 
-	DrawCircle(Xindex, Yindex, 10, BLACK);
+	DrawCircle(Xindex, Yindex, size, BLACK);
 }
 
 void ThreeDee::XRotation(double degrees) {
@@ -100,7 +100,7 @@ Cube::Cube()
 void Cube::DrawCubePoints(int size)
 {
 	for (int i = 0; i < 8; ++i) {
-		vertList[i].DrawPoint();
+		vertList[i].DrawPoint(size);
 	}
 }
 
@@ -119,6 +119,7 @@ void Cube::DrawCubeLines()
 			DrawLine(vertList[(i % 4) + 4].Xindex, vertList[(i % 4) + 4].Yindex, vertList[((i + 1) % 4) + 4].Xindex, vertList[((i + 1) % 4) + 4].Yindex, BLACK);
 		}
 	}
+
 }
 
 void Cube::XRotation(double degrees)
