@@ -1,5 +1,5 @@
 #include "globals.h"
 
-int width = 1920;
-int height = 1440;
+int width = 1500;
+int height = 750;
 const char* title = "THREEDEEE";

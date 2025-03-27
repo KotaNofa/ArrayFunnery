@@ -2,21 +2,32 @@
 #define SCREEN_H
 
 #include "raylib.h"
+#include "Vertex.h"
 
 class Screen {
 public:
-	Vector3 coord;
-	Vector3 rotation;
-	Vector2 screen;
-	double fov;
 
-	Screen(double fov);
-	void XRotation(double degrees);
-	void YRotation(double degrees);
-	void ZRotation(double degrees);
-	void XTranslate(double amount);
-	void YTranslate(double amount);
-	void ZTranslate(double amount);
+	float fovX;
+	float fovY;
+	float screenX;
+	float screenY;
+
+	float X;
+	float Y;
+	float Z;
+
+	float rotationX;
+	float rotationY;
+	float rotationZ;
+
+	Screen();
+	void DrawVert(Vertex in);
+	void XRotation(float degrees);
+	void YRotation(float degrees);
+	void ZRotation(float degrees);
+	void XTranslate(float amount);
+	void YTranslate(float amount);
+	void ZTranslate(float amount);
 };
 
 #endif // !CAMERA_H

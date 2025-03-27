@@ -131,11 +131,11 @@
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="globals.h" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ThreeDee.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Screen.h" />
-    <ClInclude Include="ThreeDee.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
