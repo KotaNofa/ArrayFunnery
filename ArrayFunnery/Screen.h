@@ -5,8 +5,7 @@
 #include "Vertex.h"
 
 class Screen {
-public:
-
+private:
 	float fovX;
 	float fovY;
 	float screenX;
@@ -20,14 +19,16 @@ public:
 	float rotationY;
 	float rotationZ;
 
+public:
 	Screen();
-	void DrawVert(Vertex in);
 	void XRotation(float degrees);
 	void YRotation(float degrees);
 	void ZRotation(float degrees);
 	void XTranslate(float amount);
 	void YTranslate(float amount);
 	void ZTranslate(float amount);
+	void DrawVert(Vertex in);
+	void DrawVertCube(Cube);
 };
 
 #endif // !CAMERA_H

@@ -10,7 +10,7 @@
 using namespace std;
 
 // I hate you raylib
-void DisplayMousePos() {
+void DrawStats() {
     Vector2 pos = GetMousePosition();
     char toChar[100];  
     snprintf(toChar, sizeof(toChar), "X: %.2f Y: %.2f", pos.x, pos.y);  
@@ -29,11 +29,11 @@ int main() {
         BeginDrawing();
         ClearBackground(GRAY);
 
-        DisplayMousePos();
-        DrawText("hello yes this is workinfg :)", width / 2, height / 2, 20, BLACK);
+        DrawStats();
+        DrawText("hello yes this is working :) hi!", width / 2, height / 2, 20, BLACK);
 
-        view.DrawVert(jeff);
-    
+        view.DrawVertCube(cube);
+
 
 
         EndDrawing();
@@ -42,25 +42,30 @@ int main() {
             cube.YRotation(GetMouseDelta().x * 0.075);
             cube.XRotation(GetMouseDelta().y * 0.075);
         }
-        if (IsKeyDown(KEY_U)) {
+
+        if (IsKeyDown(KEY_Q)) {
+            cube.YRotation(-1);
         }
-        if (IsKeyDown(KEY_O)) {
+        if (IsKeyDown(KEY_E)) {
+            cube.YRotation(1);
         }
         if (IsKeyDown(KEY_W)) {
-            view.YTranslate(5);
+            view.ZTranslate(1);
         }
         if (IsKeyDown(KEY_S)) {
-            view.YTranslate(-5);
+            view.ZTranslate(-1);
         }
         if (IsKeyDown(KEY_A)) {
-            jeff.XTranslate(-5);
+            view.XTranslate(-1);
         }
         if (IsKeyDown(KEY_D)) {
-            jeff.XTranslate(+5);
+            view.XTranslate(+1);
         }
         if (IsKeyDown(KEY_SPACE)) {
+            view.YTranslate(-1);
         }
         if (IsKeyDown(KEY_LEFT_SHIFT)) {
+            view.YTranslate(+1);
         }
     }
     CloseWindow();

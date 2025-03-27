@@ -24,7 +24,7 @@ private:
 	float Z;
 };
 
-class Cube : public Vertex {
+class Cube {
 public:
 
 	std::vector<Vertex> vertList;
