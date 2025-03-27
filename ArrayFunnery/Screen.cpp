@@ -4,26 +4,20 @@
 #include <cmath>
 #include <iostream>
 
-float CFOVX(float fov) {
-	float rads = fov * (M_PI / 180);  // Convert FOV to radians
-	float focalLength = height / (2.0 * tan(rads / 2.0));  // Focal length for vertical FOV
-	return focalLength * (width / height);  // Scale by aspect ratio (width / height) for X-axis
-};
-
-// Calculate FOV for Y
-float CFOVY(float fov) {
-	float rads = fov * (M_PI / 180);  // Convert FOV to radians
-	return height / (2.0 * tan(rads / 2.0));  // Focal length for vertical FOV
-};
+float CalculateFOV(float fovDegrees) {
+	float fovRadians = fovDegrees * (M_PI / 180.0f);
+	return 1 / tan(fovRadians / 2);
+}
 
 Screen::Screen()
 {
-	float fov = 45;
+	float fov = 15;
+	fovX = CalculateFOV(90);
+	fovY = CalculateFOV(90);;
 
-	fovX = CFOVX(fov);
-	fovY = CFOVY(fov);
 	screenX = width / 2;
 	screenY = height / 2;
+
 
 	X = 0;
 	Y = 0;
@@ -34,27 +28,6 @@ Screen::Screen()
 
 }
 
-// Convert X To Screen Space
-float CTSSX(float in) {
-	float out = width / 2 + in;
-	return out;
-}
-
-// Convert Y To Screen Space
-float CTSSY(float in) {
-	float out = height / 2 - in;
-	return out;
-}	
-
-void Screen::DrawVert(Vertex in)
-{
-	screenX = (CTSSX(in.GetX()));
-	screenY = (CTSSY(in.GetY()));
-	std::cout << in.GetX() << " " << in.GetY() << std::endl;
-	std::cout << screenX << " " << screenY << std::endl;
-
-	DrawRectangle(screenX, screenY, 5, 5, RED);
-}
 
 void Screen::XRotation(float degrees)
 {
@@ -74,16 +47,53 @@ void Screen::ZRotation(float degrees)
 void Screen::XTranslate(float amount)
 {
 	X += amount;
-	screenX -= amount;
 }
 
 void Screen::YTranslate(float amount)
 {
 	Y += amount;
-	screenY -= amount;
 }
 
 void Screen::ZTranslate(float amount)
 {
 	Z += amount;
+}
+
+// Convert X To Screen Space
+float CTSSX(float in) {
+	return (width / 2.0f) + (in * width / 2.0f);
+}
+// Convert Y To Screen Space
+float CTSSY(float in) {
+	return (height / 2.0f) - (in * height / 2.0f);
+}
+
+void Screen::DrawVert(Vertex in)
+{
+	float viewX = in.GetX() - X;
+	float viewY = in.GetY() - Y;
+	float viewZ = in.GetZ() - Z;
+
+	if (viewZ <= 0) return;
+
+	float projectedX = (viewX * fovX) / viewZ;
+	float projectedY = (viewY * fovY) / viewZ;
+
+	screenX = CTSSX(projectedX);
+	screenY = CTSSY(projectedY);
+
+	if (IsKeyPressed(KEY_F3)) {
+		std::cout << "Global Pos " << in.GetX() << " " << in.GetY() << " " << in.GetZ() << std::endl;
+		std::cout << "Screen Pos " << screenX << " " << screenY << std::endl;
+		std::cout << "Cam Pos " << X << " " << Y << " " << Z << std::endl;
+	}
+
+	DrawRectangle(screenX, screenY, 5, 5, RED);
+}
+
+void Screen::DrawVertCube(Cube in)
+{
+	for (int i = 0; i < in.vertList.size(); i++) {
+		DrawVert(in.vertList[i]);
+	}
 }
