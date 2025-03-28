@@ -4,30 +4,43 @@
 #include <cmath>
 #include <iostream>
 
-float CalculateFOV(float fovDegrees) {
+// Calculate Field Of View
+float Screen::CalculateFOV(float fovDegrees) {
 	float fovRadians = fovDegrees * (M_PI / 180.0f);
 	return 1 / tan(fovRadians / 2);
 }
+// Convert X To Screen Space
+float Screen::CTSSX(float in) {
+	return (width / 2.0f) + (in * width / 2.0f);
+}
+// Convert Y To Screen Space
+float Screen::CTSSY(float in) {
+	return (height / 2.0f) - (in * height / 2.0f);
+}
+
 
 Screen::Screen()
 {
-	float fov = 15;
-	fovX = CalculateFOV(90);
-	fovY = CalculateFOV(90);;
-
-	screenX = width / 2;
-	screenY = height / 2;
-
+	fovX = CalculateFOV(84);
+	fovY = fovX * (width / height);
+	screenX = CTSSX(0);
+	screenY = CTSSY(0);
 
 	X = 0;
 	Y = 0;
 	Z = 0;
+
 	rotationX = 0;
 	rotationY = 0;
 	rotationZ = 0;
 
 }
 
+void Screen::SetFOV(float degrees)
+{
+	fovX = CalculateFOV(degrees);
+	fovY = fovX * (width / height);
+}
 
 void Screen::XRotation(float degrees)
 {
@@ -57,15 +70,6 @@ void Screen::YTranslate(float amount)
 void Screen::ZTranslate(float amount)
 {
 	Z += amount;
-}
-
-// Convert X To Screen Space
-float CTSSX(float in) {
-	return (width / 2.0f) + (in * width / 2.0f);
-}
-// Convert Y To Screen Space
-float CTSSY(float in) {
-	return (height / 2.0f) - (in * height / 2.0f);
 }
 
 void Screen::DrawVert(Vertex in)

@@ -19,8 +19,13 @@ private:
 	float rotationY;
 	float rotationZ;
 
+	float CalculateFOV(float degrees);
+	float CTSSX(float in);
+	float CTSSY(float in);
+
 public:
 	Screen();
+	void SetFOV(float degrees);
 	void XRotation(float degrees);
 	void YRotation(float degrees);
 	void ZRotation(float degrees);

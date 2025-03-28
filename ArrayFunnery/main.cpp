@@ -34,38 +34,36 @@ int main() {
 
         view.DrawVertCube(cube);
 
-
-
         EndDrawing();
 
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-            cube.YRotation(GetMouseDelta().x * 0.075);
-            cube.XRotation(GetMouseDelta().y * 0.075);
+            cube.XRotation(GetMouseDelta().x * 0.075);
+            cube.YRotation(GetMouseDelta().y * 0.075);
         }
 
         if (IsKeyDown(KEY_Q)) {
-            cube.YRotation(-1);
+            cube.YRotation(-5);
         }
         if (IsKeyDown(KEY_E)) {
-            cube.YRotation(1);
+            cube.YRotation(5);
         }
         if (IsKeyDown(KEY_W)) {
-            view.ZTranslate(1);
+            view.ZTranslate(5);
         }
         if (IsKeyDown(KEY_S)) {
-            view.ZTranslate(-1);
+            view.ZTranslate(-5);
         }
         if (IsKeyDown(KEY_A)) {
-            view.XTranslate(-1);
+            view.XTranslate(-5);
         }
         if (IsKeyDown(KEY_D)) {
-            view.XTranslate(+1);
+            view.XTranslate(+5);
         }
         if (IsKeyDown(KEY_SPACE)) {
-            view.YTranslate(-1);
+            view.YTranslate(+5);
         }
         if (IsKeyDown(KEY_LEFT_SHIFT)) {
-            view.YTranslate(+1);
+            view.YTranslate(-5);
         }
     }
     CloseWindow();
