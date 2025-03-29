@@ -1,23 +1,21 @@
 #ifndef	SCREEN_H
 #define SCREEN_H
 
-#include "raylib.h"
 #include "Vertex.h"
+#include "Object.h"
 
 class Screen {
 private:
+
 	float fovX;
 	float fovY;
-	float screenX;
-	float screenY;
 
 	float X;
 	float Y;
 	float Z;
-
-	float rotationX;
-	float rotationY;
-	float rotationZ;
+	float rX;
+	float rY;
+	float rZ;
 
 	float CalculateFOV(float degrees);
 	float CTSSX(float in);
@@ -32,8 +30,8 @@ public:
 	void XTranslate(float amount);
 	void YTranslate(float amount);
 	void ZTranslate(float amount);
-	void DrawVert(Vertex in);
-	void DrawVertCube(Cube);
+	void DrawVerts(Object& in);
+	
 };
 
 #endif // !CAMERA_H

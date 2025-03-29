@@ -1,14 +1,14 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include "vertex.h"
-#include "raylib.h"
 #include "globals.h"
+#include "vertex.h"
+#include "Object.h"
 
 Vertex::Vertex() {
+
 	X = 0.0;
 	Y = 0.0;
 	Z = 0.0;
-
 }
 
 Vertex::Vertex(float inX, float inY, float inZ) {
@@ -16,20 +16,19 @@ Vertex::Vertex(float inX, float inY, float inZ) {
 	X = inX;
 	Y = inY;
 	Z = inZ;
-	float price{ 1.5 };
 }
 
-float Vertex::GetX()
+float Vertex::GetX() const
 {
 	return X;
 }
 
-float Vertex::GetY()
+float Vertex::GetY() const
 {
 	return Y;
 }
 
-float Vertex::GetZ()
+float Vertex::GetZ() const
 {
 	return Z;
 }
@@ -79,58 +78,4 @@ void Vertex::YTranslate(float amount)
 void Vertex::ZTranslate(float amount)
 {
 	Z += amount;
-}
-
-Cube::Cube()
-{
-	vertList.push_back(Vertex(100, 100, 100));
-	vertList.push_back(Vertex(100, -100, 100));
-	vertList.push_back(Vertex(-100, -100, 100));
-	vertList.push_back(Vertex(-100, 100, 100));
-	vertList.push_back(Vertex(100, 100, -100));
-	vertList.push_back(Vertex(100, -100, -100));
-	vertList.push_back(Vertex(-100, -100, -100));
-	vertList.push_back(Vertex(-100, 100, -100));
-}
-
-void Cube::XRotation(float degrees)
-{
-	for (int i = 0; i < 8; ++i) {
-		vertList[i].XRotation(degrees);
-	}
-}
-
-void Cube::YRotation(float degrees)
-{
-	for (int i = 0; i < 8; ++i) {
-		vertList[i].YRotation(degrees);
-	}
-}
-
-void Cube::ZRotation(float degrees)
-{
-	for (int i = 0; i < 8; ++i) {
-		vertList[i].ZRotation(degrees);
-	}
-}
-
-void Cube::XTranslate(float amount)
-{
-	for (int i = 0; i < 8; ++i) {
-		vertList[i].XTranslate(amount);
-	}
-}
-
-void Cube::YTranslate(float amount)
-{
-	for (int i = 0; i < 8; ++i) {
-		vertList[i].YTranslate(amount);
-	}
-}
-
-void Cube::ZTranslate(float amount)
-{
-	for (int i = 0; i < 8; ++i) {
-		vertList[i].ZTranslate(amount);
-	}
 }

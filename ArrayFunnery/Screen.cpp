@@ -3,6 +3,7 @@
 #include "globals.h"
 #include <cmath>
 #include <iostream>
+#include "Object.h"
 
 // Calculate Field Of View
 float Screen::CalculateFOV(float fovDegrees) {
@@ -18,21 +19,18 @@ float Screen::CTSSY(float in) {
 	return (height / 2.0f) - (in * height / 2.0f);
 }
 
-
 Screen::Screen()
 {
 	fovX = CalculateFOV(84);
 	fovY = fovX * (width / height);
-	screenX = CTSSX(0);
-	screenY = CTSSY(0);
 
 	X = 0;
 	Y = 0;
 	Z = 0;
 
-	rotationX = 0;
-	rotationY = 0;
-	rotationZ = 0;
+	rX = 0;
+	rY = 0;
+	rZ = 0;
 
 }
 
@@ -44,17 +42,20 @@ void Screen::SetFOV(float degrees)
 
 void Screen::XRotation(float degrees)
 {
-
+	rX += fmod(degrees, 360.0f);
+	if (rX < 0) rX += 360.0f;
 }
 
 void Screen::YRotation(float degrees)
 {
-
+	rY += fmod(degrees, 360.0f);
+	if (rY < 0) rY += 360.0f;
 }	
 
 void Screen::ZRotation(float degrees)
 {
-
+	rZ += fmod(degrees, 360.0f);
+	if (rZ < 0) rZ += 360.0f;
 }
 
 void Screen::XTranslate(float amount)
@@ -72,32 +73,7 @@ void Screen::ZTranslate(float amount)
 	Z += amount;
 }
 
-void Screen::DrawVert(Vertex in)
+void Screen::DrawVerts(Object& in)
 {
-	float viewX = in.GetX() - X;
-	float viewY = in.GetY() - Y;
-	float viewZ = in.GetZ() - Z;
 
-	if (viewZ <= 0) return;
-
-	float projectedX = (viewX * fovX) / viewZ;
-	float projectedY = (viewY * fovY) / viewZ;
-
-	screenX = CTSSX(projectedX);
-	screenY = CTSSY(projectedY);
-
-	if (IsKeyPressed(KEY_F3)) {
-		std::cout << "Global Pos " << in.GetX() << " " << in.GetY() << " " << in.GetZ() << std::endl;
-		std::cout << "Screen Pos " << screenX << " " << screenY << std::endl;
-		std::cout << "Cam Pos " << X << " " << Y << " " << Z << std::endl;
-	}
-
-	DrawRectangle(screenX, screenY, 5, 5, RED);
-}
-
-void Screen::DrawVertCube(Cube in)
-{
-	for (int i = 0; i < in.vertList.size(); i++) {
-		DrawVert(in.vertList[i]);
-	}
 }

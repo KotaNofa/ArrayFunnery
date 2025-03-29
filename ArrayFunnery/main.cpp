@@ -2,10 +2,12 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "globals.h"
 #include "raylib.h"
 #include "Vertex.h"
-#include "globals.h"
+#include "Object.h"
 #include "Screen.h"
+
 
 using namespace std;
 
@@ -21,50 +23,28 @@ int main() {
     InitWindow(width, height, title);
     SetTargetFPS(60);
 
-    Screen view;
-    Cube cube;
-    Vertex jeff(50, 50, 1);
+    Object cube;
+
+    cube.vertices.insert(cube.vertices.end(), {
+        Vertex(-100, -100, -100), Vertex(100, -100, -100),
+        Vertex(100,  100, -100), Vertex(-100,  100, -100),
+        Vertex(-100, -100,  100), Vertex(100, -100,  100),
+        Vertex(100,  100,  100), Vertex(-100,  100,  100)
+    });
 
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(GRAY);
-
         DrawStats();
         DrawText("hello yes this is working :) hi!", width / 2, height / 2, 20, BLACK);
 
-        view.DrawVertCube(cube);
+        view.DrawVerts(cube);
+
+        GetInput();
 
         EndDrawing();
 
-        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-            cube.XRotation(GetMouseDelta().x * 0.075);
-            cube.YRotation(GetMouseDelta().y * 0.075);
-        }
 
-        if (IsKeyDown(KEY_Q)) {
-            cube.YRotation(-5);
-        }
-        if (IsKeyDown(KEY_E)) {
-            cube.YRotation(5);
-        }
-        if (IsKeyDown(KEY_W)) {
-            view.ZTranslate(5);
-        }
-        if (IsKeyDown(KEY_S)) {
-            view.ZTranslate(-5);
-        }
-        if (IsKeyDown(KEY_A)) {
-            view.XTranslate(-5);
-        }
-        if (IsKeyDown(KEY_D)) {
-            view.XTranslate(+5);
-        }
-        if (IsKeyDown(KEY_SPACE)) {
-            view.YTranslate(+5);
-        }
-        if (IsKeyDown(KEY_LEFT_SHIFT)) {
-            view.YTranslate(-5);
-        }
     }
     CloseWindow();
 
