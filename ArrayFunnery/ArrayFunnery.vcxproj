@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="globals.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
