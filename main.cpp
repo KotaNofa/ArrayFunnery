@@ -1,11 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <fstream>
-#include <vector>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <chrono>
-
 #include "parser.h"
 
 int main() {
