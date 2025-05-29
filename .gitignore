@@ -2,3 +2,4 @@ model/
 font/
 texture/
 *.drawio
+.vscode/launch.json

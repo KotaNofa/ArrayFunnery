@@ -1,13 +1,7 @@
 #ifndef STRUCTS_H
-#define STRUCTS+H
+#define STRUCTS_H
 
-#include <SFML/Graphics.hpp>
-#include <fstream>
 #include <vector>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <chrono>
 
 class Vertices {
 public:
@@ -26,7 +20,6 @@ public:
 struct Model {
     std::vector<Vertices>verts;
     std::vector<Indices>indices;
-    sf::Texture texture;
 };
 
-#endif STRUCTS_H
+#endif
