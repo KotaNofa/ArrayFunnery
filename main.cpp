@@ -2,9 +2,13 @@
 
 #include "parser.h"
 
-int main() {
+#include <thread>
+#include <iostream>
 
-    ObjToModelParser("model/cube.obj");
+int main() {
+    
+    Scene world;
+    ModelLoader("model/list.txt", world);
 
     // get current monitor res
     sf::VideoMode primaryDisplay = sf::VideoMode::getDesktopMode();
@@ -62,6 +66,8 @@ int main() {
     triangle2[1].color = sf::Color::Blue;
     triangle2[2].color = sf::Color::Green;
     */
+
+    
     
 
     // load font
@@ -71,9 +77,9 @@ int main() {
     }
 
     // generic text object
-    sf::Text jeff("Hello SFML!", font, 30);
+    sf::Text jeff("Hi! I'm Koka!", font, 30);
     jeff.setPosition(0,0);
-    jeff.setFillColor(sf::Color::Black);
+    jeff.setFillColor(sf::Color::White);
 
     // create image
     sf::Image image;
@@ -104,6 +110,7 @@ int main() {
         window.clear(sf::Color::Black);
 
         // draw text object
+        window.draw(jeff);
         // window.draw(triangle1);
         // window.draw(triangle2);
         window.display();

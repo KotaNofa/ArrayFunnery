@@ -12,15 +12,20 @@
 #include <string>
 #include <chrono>
 #include <array>
+#include <thread>
+#include <mutex>
 
-Model ObjToModelParser(std::string name) {
+void ObjToModelParser(std::string name, Model& output) {
 
-    auto start = std::chrono::high_resolution_clock::now();
+    std::thread::id id = std::this_thread::get_id();
+    std::cout << "Executed on this thread BTW: " << id << std::endl;
 
     std::ifstream file(name);
-    if (!file) std::cout << "Failed to find model: " << name << std::endl;
+    if (!file) {
+        std::cout << "Failed to find model: " << name << std::endl;
+        return;
+    }
     
-    Model output;
     std::string line;
     std::string type;
     float x, y, z;
@@ -41,7 +46,6 @@ Model ObjToModelParser(std::string name) {
     std::cout << "Beginning parse of: " << name << std::endl;
     while (std::getline(file, line)) {
 
-        auto start = std::chrono::high_resolution_clock::now();
         std::stringstream input(line);
         input >> type;
 
@@ -62,15 +66,52 @@ Model ObjToModelParser(std::string name) {
             std::cout << "Vert UV: " << x << " " << y << std::endl;
         } 
         else if (type == "f") {
-            
+            input >> i1 >> i2 >> i3 >> i4;
         }
+    }
+
+    std::cout << "Model has total vert count of " << output.verts.size() << ", and a tri count of " << output.indices.size() << ". that's big, right?" << std::endl;
+}
+
+void ModelLoader(std::string modelList, Scene& output) {
+
+    auto start = std::chrono::high_resolution_clock::now();
+
+    std::ifstream file(modelList);
+    if (!file) {
+        std::cout << "Failed to find model list: " << modelList << std::endl;
+    }
+    unsigned int threadCount = std::thread::hardware_concurrency();
+    unsigned int batchSize = threadCount / 4;
+    std::cout << "You'll have " << threadCount << " threads working"<< std::endl;
+
+    std::string line;
+    std::string name;
+    std::vector<std::string> list;
+    
+    while(std::getline(file, line)) {
+        std::stringstream input(line);
+        input >> name;
+        if (!name.empty()) {
+            list.push_back("model/" + name);
+            output.models.push_back({});
+        }
+    }
+    
+    for (int i = 0; i < list.size(); i += batchSize) {
+        std::vector<std::thread> threads;
+        for (int j = 0; j < batchSize && (i + j) < list.size(); ++j) {
+            threads.emplace_back(ObjToModelParser, list[i + j], std::ref(output.models.at(j + i)));
+        }
+        for (auto& t : threads) {
+            t.join();
+        } 
     }
 
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "Model finished parsing in " << duration.count() << "ms a total vert count of " << output.verts.size() << ", and a tri count of " << output.indices.size() << ". that's big, right?" << std::endl;
-
-    return output;
+    std::cout << "Loaded " << list.size() << " models in " << duration.count() << "ms" << std::endl;
 }
+
 
 #endif

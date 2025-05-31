@@ -1,5 +1,6 @@
 model/
 font/
 texture/
-*.drawio
+.drawio
 .vscode/launch.json
+a.out

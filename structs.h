@@ -12,14 +12,18 @@ public:
 
 class Indices {
 public:
-    unsigned int i_geo[3];
-    unsigned int i_normal[3];
-    unsigned int i_uv[3];
+    unsigned int geo[3];
+    unsigned int normal[3];
+    unsigned int uv[3];
 };
 
 struct Model {
     std::vector<Vertices>verts;
     std::vector<Indices>indices;
+};
+
+struct Scene {
+    std::vector<Model>models;
 };
 
 #endif
