@@ -4,11 +4,54 @@
 
 #include <thread>
 #include <iostream>
+#include <random>
+
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> dis(0, 255);
+
+
+sf::Vector3f toV3f (float input[3]) {
+    sf::Vector3f output = { input[0],input[1],input[2]};
+    return output;
+};
+
+sf::Vector2f projectV3f (sf::Vector3f input) {
+    float scale = 200.f;
+    input.x = scale * (input.x / input.z + 0.00001) + 960;
+    input.y = scale * (-input.y / input.z + 0.00001) + 540;
+    return sf::Vector2f(input.x, input.y);
+}
+
 
 int main() {
     
     Scene world;
     ModelLoader("model/list.txt", world);
+
+    std::vector<sf::Vertex>triangleQue;
+    
+    // drawing all models in scene
+    for (int i = 0; i < world.models.size(); ++i ) {
+        // drawing all triangles in model
+        for (int j = 0; j < world.models[i].indices.size(); ++j) {
+            // getting all points from indeces
+            for (int n = 0; n < 3; ++ n) {
+                int selVert = world.models[i].indices[j].geo[n];
+                sf::Vector3f temp = toV3f(world.models[i].verts[selVert].geo);
+                sf::Color randomColor(dis(gen), dis(gen), dis(gen));
+                triangleQue.push_back(sf::Vertex(projectV3f(temp), randomColor));
+            }
+        }
+    }
+
+    sf::VertexArray triangle(sf::Triangles);
+
+    for (size_t i = 0; i < triangleQue.size(); ++i) {
+        triangle.append(triangleQue[i]);
+    }
+
+
 
     // get current monitor res
     sf::VideoMode primaryDisplay = sf::VideoMode::getDesktopMode();
@@ -16,59 +59,6 @@ int main() {
     // halve it
     primaryDisplay.height /= 2;
     primaryDisplay.width /= 2;
-
-    /*
-    float camX = 0.f, camY = 5.f, camZ = 10.f;
-    float f = 1.0f;
-    float scale = 200.f; // scale projection to pixels
-    float centerX = primaryDisplay.width / 2.f;
-    float centerY = primaryDisplay.height / 2.f;
-
-    auto project = [&](float x, float y, float z) -> sf::Vector2f {
-        float rx = x - camX;
-        float ry = y - camY;
-        float rz = z - camZ;
-        if (rz >= 0) rz = -0.0001f; // avoid division by zero or behind camera
-
-        float Xp = (f * rx) / -rz;
-        float Yp = (f * ry) / -rz;
-
-        return sf::Vector2f(centerX + Xp * scale, centerY - Yp * scale);
-    };
-
-    std::array<std::array<float, 3>, 4> points = {{
-        {-3.974462f, 0.f,  3.974462f},
-        { 3.974462f, 0.f,  3.974462f},
-        { 3.974462f, 0.f, -3.974462f},
-        {-3.974462f, 0.f, -3.974462f}
-    }};
-
-    sf::Vector2f p1 = project(points[0][0], points[0][1], points[0][2]);
-    sf::Vector2f p2 = project(points[1][0], points[1][1], points[1][2]);
-    sf::Vector2f p3 = project(points[2][0], points[2][1], points[2][2]);
-    sf::Vector2f p4 = project(points[3][0], points[3][1], points[3][2]);
-
-    sf::VertexArray triangle1(sf::Triangles, 3);
-    triangle1[0].position = p1;
-    triangle1[1].position = p2;
-    triangle1[2].position = p3;
-
-    triangle1[0].color = sf::Color::Red;
-    triangle1[1].color = sf::Color::Green;
-    triangle1[2].color = sf::Color::Blue;
-
-    sf::VertexArray triangle2(sf::Triangles, 3);
-    triangle2[0].position = p1;
-    triangle2[1].position = p3;
-    triangle2[2].position = p4;
-
-    triangle2[0].color = sf::Color::Red;
-    triangle2[1].color = sf::Color::Blue;
-    triangle2[2].color = sf::Color::Green;
-    */
-
-    
-    
 
     // load font
     sf::Font font;
@@ -78,7 +68,7 @@ int main() {
 
     // generic text object
     sf::Text jeff("Hi! I'm Koka!", font, 30);
-    jeff.setPosition(0,0);
+    jeff.setPosition(960,540);
     jeff.setFillColor(sf::Color::White);
 
     // create image
@@ -107,12 +97,13 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
         }
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color::White);
 
         // draw text object
         window.draw(jeff);
         // window.draw(triangle1);
         // window.draw(triangle2);
+        window.draw(triangle);
         window.display();
     }
     return 0;
