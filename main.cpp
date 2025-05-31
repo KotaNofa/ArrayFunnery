@@ -18,8 +18,8 @@ sf::Vector3f toV3f (float input[3]) {
 
 sf::Vector2f projectV3f (sf::Vector3f input) {
     float scale = 200.f;
-    input.x = scale * (input.x / input.z + 0.00001) + 960;
-    input.y = scale * (-input.y / input.z + 0.00001) + 540;
+    input.x = scale * (input.x) + 960;
+    input.y = scale * (-input.y) + 540;
     return sf::Vector2f(input.x, input.y);
 }
 
