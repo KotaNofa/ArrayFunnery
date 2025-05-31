@@ -17,9 +17,9 @@ sf::Vector3f toV3f (float input[3]) {
 };
 
 sf::Vector2f projectV3f (sf::Vector3f input) {
-    float scale = 200.f;
-    input.x = scale * (input.x) + 960;
-    input.y = scale * (-input.y) + 540;
+    float scale = 500.f;
+    input.x = scale * (input.x) + 540;
+    input.y = scale * (-input.y) + 1050;
     return sf::Vector2f(input.x, input.y);
 }
 
@@ -58,7 +58,7 @@ int main() {
 
     // halve it
     primaryDisplay.height /= 2;
-    primaryDisplay.width /= 2;
+    primaryDisplay.width = primaryDisplay.height;
 
     // load font
     sf::Font font;
