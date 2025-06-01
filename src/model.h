@@ -1,29 +1,32 @@
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include <vector>
+#include <string>
 
-class Vertices {
-public:
+struct Vertices {
     float geo[3];
     float normal[3];
     float uv[2];
 };
 
-class Indices {
-public:
+struct Indices {
     unsigned int geo[3];
     unsigned int normal[3];
     unsigned int uv[3];
 };
 
-struct Model {
+class Model {
+public:
     std::vector<Vertices>verts;
     std::vector<Indices>indices;
+    void ObjToModelParser(std::string name, Model& output);
 };
 
-struct Scene {
+class Scene {
+public:
     std::vector<Model>models;
+    void loadModels(const std::string manifest);
 };
 
 #endif

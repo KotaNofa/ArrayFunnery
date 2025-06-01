@@ -1,19 +1,18 @@
-#ifndef PARSER_H
-#define PARSER_H
+#include "parser.h"
 
-#include "structs.h"
+#include "model.h"
 
-#include <SFML/Graphics.hpp>
-
-#include <fstream>
-#include <vector>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <chrono>
 #include <array>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
 #include <thread>
-#include <mutex>
+#include <iostream>
+#include <chrono>
+#include <algorithm>
+
+// Source file for difference parsers, should be read to add other filetypes.
 
 void ObjToModelParser(std::string name, Model& output) {
 
@@ -86,8 +85,7 @@ void ObjToModelParser(std::string name, Model& output) {
         }
     }
 
-
-    // find largest 
+        // find largest 
     size_t largestIndex = std::max({v_geos.size(), v_normals.size(), v_uvs.size()});
     // resize to largest index found in list
     output.verts.resize(largestIndex);
@@ -118,47 +116,5 @@ void ObjToModelParser(std::string name, Model& output) {
     // std::cout << output.verts[0].geo[1] << std::endl;
     // std::cout << output.verts[0].geo[2] << std::endl;
     // std::cout << std::endl;
-}
+};
 
-void ModelLoader(std::string modelList, Scene& output) {
-
-    auto start = std::chrono::high_resolution_clock::now();
-
-    std::ifstream file(modelList);
-    if (!file) {
-        std::cout << "Failed to find model list: " << modelList << std::endl;
-    }
-    unsigned int threadCount = std::thread::hardware_concurrency();
-    unsigned int batchSize = threadCount / 4;
-    std::cout << "You'll have " << threadCount << " threads working"<< std::endl;
-
-    std::string line;
-    std::string name;
-    std::vector<std::string> list;
-    
-    while(std::getline(file, line)) {
-        std::stringstream input(line);
-        input >> name;
-        if (!name.empty()) {
-            list.push_back("model/" + name);
-            output.models.push_back({});
-        }
-    }
-    
-    for (int i = 0; i < list.size(); i += batchSize) {
-        std::vector<std::thread> threads;
-        for (int j = 0; j < batchSize && (i + j) < list.size(); ++j) {
-            threads.emplace_back(ObjToModelParser, list[i + j], std::ref(output.models.at(j + i)));
-        }
-        for (auto& t : threads) {
-            t.join();
-        } 
-    }
-
-    auto end = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    std::cout << "Loaded " << list.size() << " models in " << duration.count() << "ms" << std::endl;
-}
-
-
-#endif

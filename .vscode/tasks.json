@@ -7,9 +7,13 @@
             "command": "g++",
             "args": [
                 "-g",
-                "main.cpp",
+                "src/main.cpp",
+                "src/model.cpp",
+                "src/parser.cpp",
+                "src/viewport.cpp",
+                "src/render.cpp",
                 "-o",
-                "main",
+                "Koka3D",
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system"
