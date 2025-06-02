@@ -1,18 +1,14 @@
 #ifndef VIEWPORT_H
 #define VIEWPORT_H
 
-#include <string>
 #include <vector>
-
-class Scene; // forward declaration
 
 class Viewport {
     public:
     float position[3];
     float rotation[3];
-    Scene* local;
 
-    Viewport(Scene &scene);
+    Viewport();
 
     void TranslateX(float input);
     void TranslateY(float input);

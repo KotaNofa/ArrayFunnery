@@ -1,55 +1,64 @@
 #include "render.h"
 
-#include <random>
+#include "globals.h"
 
 #include "SFML/Graphics.hpp"
 
-void Render(const Scene& scene, const Viewport& viewport) {
-    
-};
+#include <random>
+#include <array>
 
-/* std::random_device rd; 
+std::random_device rd; 
 std::mt19937 gen(rd());
 std::uniform_int_distribution<> dis(0, 255);
 
-sf::Vector3f toV3f (float input[3]) {
-    sf::Vector3f output = { input[0],input[1],input[2]};
-    return output;
-};
+// extern sf::VideoMode desktop;
+// extern unsigned int winWidth;
+// extern unsigned int winHeight;
 
-
-
-sf::Vector2f projectV3f (sf::Vector3f input) {
-    float scale = 500.f;
-    input.x = scale * (input.x) + 540;
-    input.y = scale * (-input.y) + 1050;
-    return sf::Vector2f(input.x, input.y);
+void Translate(const float (&model)[3], const float (&view)[3],float (&temp)[3]) {
+    temp[0] = model[0] + view[0];
+    temp[1] = model[1] + view[1];
+    temp[2] = model[2] + view[2];   
 }
 
-void Render(Scene* scene, Viewport* viewport){
-    
+void Transform(const float (&model)[3], float (&temp)[3], float scale) {
+    temp[0] = (model[0] / model[2]) * scale;
+    temp[1] = (model[1] / model[2]) * scale;
 };
 
+void Center(const float (&model)[3], float (&temp)[3]) {
+    temp[0] = (model[0]) + winWidth / 2;
+    temp[1] = (model[1]) + winHeight / 2;
+}
 
-/* std::vector<sf::Vertex>triangleQue;
+// for each model in scene, go through list of indices in models, grab each vertex according to the indices and apply its transformation. If any model after the projection's z values are all below 
 
-// drawing all models in scene
-for (int i = 0; i < world.models.size(); ++i ) {
-    // drawing all triangles in model
-    for (int j = 0; j < world.models[i].indices.size(); ++j) {
-        // getting all points from indeces
-        for (int n = 0; n < 3; ++ n) {
-            int selVert = world.models[i].indices[j].geo[n];
-            sf::Vector3f temp = toV3f(world.models[i].verts[selVert].geo);
-            sf::Color randomColor(dis(gen), dis(gen), dis(gen));
-            triangleQue.push_back(sf::Vertex(projectV3f(temp), randomColor));
+float t1[3] = {0,0,0};
+float t2[3] = {0,0,0};
+float t3[3] = {0,0,0};
+
+sf::Vector2f temp2f[3];
+
+sf::VertexArray mesh(sf::Triangles);
+
+void Render(const Scene& scene, const Viewport& viewport, sf::RenderWindow& window) {
+    for (int i = 0; i < scene.models.size(); ++i) {
+        for (int j = 0; j < scene.models[i].indices.size(); ++j) {
+
+            for (int n = 0; n < 3; ++n) {
+                unsigned int IndexedVert = scene.models[i].indices[j].geo[n];
+                Translate(scene.models[i].verts[IndexedVert].geo, viewport.position, t1);
+                Transform(t1, t2, 100);
+                Center(t2, t3);
+                temp2f[n] = {t3[0], t3[1]};
+            }
+            // sf::Color randomColor(dis(gen), dis(gen), dis(gen));
+
+            for (int n = 0; n < 3; ++n) {
+                mesh.append(sf::Vertex(temp2f[n],sf::Color::White));
+            }
         }
     }
+    window.draw(mesh);
+    mesh.clear();
 }
-
-sf::VertexArray triangle(sf::Triangles);
-
-for (size_t i = 0; i < triangleQue.size(); ++i) {
-    triangle.append(triangleQue[i]);
-} 
-*/

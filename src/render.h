@@ -2,8 +2,10 @@
 #define RENDER_H
 
 #include "model.h"
-#include "viewport.h" 
+#include "viewport.h"
 
-void Render(const Scene& scene, const Viewport& viewport);
+#include "SFML/Graphics.hpp"
+
+void Render(const Scene& scene, const Viewport& viewport, sf::RenderWindow& window);
 
 #endif

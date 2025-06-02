@@ -1,6 +1,6 @@
 #include "viewport.h"
 
-Viewport::Viewport(Scene &scene) {
+Viewport::Viewport() {
     position[0] = 0;
     position[1] = 0;
     position[2] = 0;

@@ -91,6 +91,7 @@ void ObjToModelParser(std::string name, Model& output) {
     output.verts.resize(largestIndex);
     // copying to output
     for (int i = 0; i < largestIndex; ++i) {
+        if (i < v_geos.size()) {
         output.verts[i].geo[0] = v_geos[i][0];
         output.verts[i].geo[1] = v_geos[i][1];
         output.verts[i].geo[2] = v_geos[i][2];
@@ -101,6 +102,8 @@ void ObjToModelParser(std::string name, Model& output) {
 
         output.verts[i].uv[0] = {v_uvs[i][0]};
         output.verts[i].uv[1] = {v_uvs[i][1]};
+        }
+        else {break;}
     }
 
     output.indices.resize(i_geos.size());

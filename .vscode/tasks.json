@@ -12,6 +12,7 @@
                 "src/parser.cpp",
                 "src/viewport.cpp",
                 "src/render.cpp",
+                "src/globals.cpp",
                 "-o",
                 "Koka3D",
                 "-lsfml-graphics",

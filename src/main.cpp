@@ -1,26 +1,12 @@
 #include <SFML/Graphics.hpp>
 
+#include "globals.h"
 #include "render.h"
 
-#include <thread>
+#include <cmath>
 #include <iostream>
-#include <random>
-
 
 int main() {
-    
-
-    Scene world;
-    world.loadModels("model/manifest.txt");
-    Viewport camera(world);
-    // Render(world, camera);
-
-    // get current monitor res
-    sf::VideoMode primaryDisplay = sf::VideoMode::getDesktopMode();
-
-    // halve it
-    primaryDisplay.height /= 2;
-    primaryDisplay.width = primaryDisplay.height;
 
     // load font
     sf::Font font;
@@ -45,10 +31,17 @@ int main() {
     sf::Sprite sprite;
     sprite.setTexture(texture);
     sprite.setPosition(400, 400);
-    
+
+    Scene world;
+    world.loadModels("model/manifest.txt");
+    Viewport camera;
+
+    float cameraSpeed = 0.01f; // Adjust as needed
+
     // draw window
-    sf::RenderWindow window(primaryDisplay, "Koka3D", sf::Style::Titlebar | sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
+    
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -59,12 +52,37 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
         }
-        window.clear(sf::Color::White);
+        window.clear(sf::Color::Black);
 
         // draw text object
         window.draw(jeff);
-        // window.draw(triangle1);
-        // window.draw(triangle2);
+        
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // Or RShift
+            
+        }
+
+        Render(world, camera, window);
+
+        // Inside your game loop (outside the event loop)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+            camera.TranslateZ(cameraSpeed);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            camera.TranslateZ(-cameraSpeed);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+            camera.TranslateX(-cameraSpeed);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+            camera.TranslateX(cameraSpeed);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            camera.TranslateY(-cameraSpeed);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) { // Or RShift
+            camera.TranslateY(cameraSpeed);
+        }
+
         window.display();
     }
     return 0;
