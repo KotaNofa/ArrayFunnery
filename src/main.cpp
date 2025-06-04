@@ -38,6 +38,8 @@ int main() {
 
     float cameraSpeed = 0.01f; // Adjust as needed
 
+    camera.position[2] = -2.f;
+
     // draw window
     sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
@@ -53,7 +55,7 @@ int main() {
             window.close();
         }
         window.clear(sf::Color::Black);
-
+        
         // draw text object
         window.draw(jeff);
         
