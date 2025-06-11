@@ -58,7 +58,7 @@ std::vector<Triangle> Transform(const std::vector<Triangle> &TriBuffer, const Vi
 void ClampZ(std::vector<Triangle>& screenBuffer) {
     for (int i = screenBuffer.size() - 1; i >= 0; --i) {
         for (int j = 0; j < 3; ++j) {
-            if (screenBuffer[i].geo[j][2] <= -1.5f) {
+            if (screenBuffer[i].geo[j][2] >= 1.f) {
                 screenBuffer.erase(screenBuffer.begin() + i);
                 break;
             }
@@ -75,8 +75,19 @@ void Center (std::vector<Triangle>& screenBuffer) {
     }
 }
 
-void SFMLDraw(std::vector<Triangle>& screenBuffer, const Viewport& viewport) {
+void SFMLDraw(std::vector<Triangle>& screenBuffer, sf::RenderWindow& window) {
+    sf::VertexArray mesh(sf::Triangles);
 
+    for (const auto& tri : screenBuffer) {
+        for (int n = 0; n < 3; ++n) {
+            mesh.append(sf::Vertex(
+                sf::Vector2f(tri.geo[n][0], tri.geo[n][1]),
+                sf::Color::White // or any color you want
+            ));
+        }
+    }
+
+    window.draw(mesh);
 }
 
 void Render(const Scene& scene, const Viewport& viewport, sf::RenderWindow& window) {
@@ -85,7 +96,7 @@ void Render(const Scene& scene, const Viewport& viewport, sf::RenderWindow& wind
     std::vector<Triangle>screenBuffer = Transform(triBuffer, viewport);
     ClampZ(screenBuffer);
     Center(screenBuffer);
-    SFMLDraw(screenBuffer, viewport);
+    SFMLDraw(screenBuffer, window);
     triBuffer.clear();
     screenBuffer.clear();
 }
