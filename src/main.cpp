@@ -66,7 +66,7 @@ int main() {
             
         }
 
-        Render(world, camera, window);
+        DrawVerts(world, camera, window);
 
         // Inside your game loop (outside the event loop)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {

@@ -6,12 +6,13 @@
     "configurations": [
         {
             "name": "(gdb) Launch",
+            "preLaunchTask": "build",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/Koka3D",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/src",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",

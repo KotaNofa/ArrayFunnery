@@ -90,7 +90,7 @@ void SFMLDraw(std::vector<Triangle>& screenBuffer, sf::RenderWindow& window) {
     window.draw(mesh);
 }
 
-void Render(const Scene& scene, const Viewport& viewport, sf::RenderWindow& window) {
+void DrawVerts(const Scene& scene, const Viewport& viewport, sf::RenderWindow& window) {
 
     std::vector<Triangle>triBuffer = loadTris(scene);
     std::vector<Triangle>screenBuffer = Transform(triBuffer, viewport);
