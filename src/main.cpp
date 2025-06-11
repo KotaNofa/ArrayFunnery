@@ -5,6 +5,9 @@
 
 #include <cmath>
 #include <iostream>
+#include <sstream>
+#include <thread>
+#include <chrono>
 
 int main() {
 
@@ -38,7 +41,7 @@ int main() {
 
     float cameraSpeed = 0.01f; // Adjust as needed
 
-    camera.position[2] = -2.f;
+    camera.position[2] = -0.f;
 
     // draw window
     sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
@@ -84,6 +87,26 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) { // Or RShift
             camera.TranslateY(cameraSpeed);
         }
+
+        std::cout << "\r"
+          << "Cam X: " << camera.position[0]
+          << " | Cam Y: " << camera.position[1]
+          << " | Cam Z: " << camera.position[2]
+          << "      " // padding to clear leftovers
+          << std::flush;
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+            std::cout << "\nEnter camera Z value: ";
+            float input;
+            while (!(std::cin >> input)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid input. Enter a numeric Z value: ";
+            }
+            camera.position[2] = input;
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        }
+
 
         window.display();
     }
