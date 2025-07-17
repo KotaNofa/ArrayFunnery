@@ -2,6 +2,7 @@
 
 #include "globals.h"
 #include "render.h"
+#include "parser.h"
 
 #include <cmath>
 #include <iostream>
@@ -11,13 +12,14 @@
 
 int main() {
 
+    /*
     // load font
     sf::Font font;
     if (!font.loadFromFile("font/boubasfont.ttf")) {
         return 1;
     }
 
-    // generic text object
+    // Hello world text object
     sf::Text jeff("Hi! I'm Koka!", font, 30);
     jeff.setPosition(960,540);
     jeff.setFillColor(sf::Color::White);
@@ -34,14 +36,14 @@ int main() {
     sf::Sprite sprite;
     sprite.setTexture(texture);
     sprite.setPosition(400, 400);
+    */
 
-    Scene world;
-    world.loadModels("model/manifest.txt");
+    Model cube;
+    ObjParse("model/cube.obj", cube);
+
     Viewport camera;
-
-    float cameraSpeed = 0.01f; // Adjust as needed
-
-    camera.position[2] = -0.f;
+    float cameraSpeed = 0.0033f; // Adjust as needed
+    camera.position[2] = 0.f;
 
     // draw window
     sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
@@ -57,16 +59,22 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
         }
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color::Green);
+
         
-        // draw text object
-        window.draw(jeff);
+
+
+
+
+
+
+
+
+        
         
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // Or RShift
             
         }
-
-        DrawVerts(world, camera, window);
 
         // Inside your game loop (outside the event loop)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {

@@ -12,13 +12,11 @@
 #include <chrono>
 #include <algorithm>
 
-// Source file for difference parsers, should be read to add other filetypes.
+void ObjParse(std::string listDir, Model& output) {
 
-void ObjToModelParser(std::string name, Model& output) {
-
-    std::ifstream file(name);
+    std::ifstream file(listDir);
     if (!file) {
-        std::cout << "Failed to find " << name << std::endl;
+        std::cout << "Failed to find " << listDir << std::endl;
         return;
     }
     
@@ -36,7 +34,7 @@ void ObjToModelParser(std::string name, Model& output) {
     std::vector<std::array<unsigned int, 3>> i_normals;
     std::vector<std::array<unsigned int, 3>> i_uvs;
 
-    std::cout << "Beginning parse of: " << name << std::endl;
+    std::cout << "Beginning parse of: " << listDir << std::endl;
     while (std::getline(file, line)) {
 
         std::stringstream input(line);
@@ -85,6 +83,7 @@ void ObjToModelParser(std::string name, Model& output) {
         }
     }
 
+    /*
         // find largest 
     size_t largestIndex = std::max({v_geos.size(), v_normals.size(), v_uvs.size()});
     // resize to largest index found in list
@@ -113,8 +112,9 @@ void ObjToModelParser(std::string name, Model& output) {
         output.indices[i].geo[2] = i_geos[i][2];
     }
 
+     */
 
-    std::cout << "   " << name << " has total vert count of " << v_geos.size() << ". That's big, right?" << std::endl;
+    std::cout << "   " << listDir << " has total vert count of " << v_geos.size() << ". That's big, right?" << std::endl;
     // std::cout << output.verts[0].geo[0] << std::endl;
     // std::cout << output.verts[0].geo[1] << std::endl;
     // std::cout << output.verts[0].geo[2] << std::endl;

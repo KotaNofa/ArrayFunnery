@@ -4,29 +4,28 @@
 #include <vector>
 #include <string>
 
-struct Vertices {
-    float geo[3];
-    float normal[3];
-    float uv[2];
+// for vertices in 3D space
+struct Vertice {
+    float x, y, z;
 };
 
-struct Indices {
-    unsigned int geo[3];
-    unsigned int normal[3];
-    unsigned int uv[3];
+// for UV coords in 2D space
+struct Map {
+    float x, y;
 };
 
+// software rendering structs
 class Model {
 public:
-    std::vector<Vertices>verts;
-    std::vector<Indices>indices;
-    void ObjToModelParser(std::string name, Model& output);
+    std::vector<Vertice>geometric;
+    std::vector<Vertice>normal;
+    std::vector<Map>uvs;
 };
 
 class Scene {
 public:
     std::vector<Model>models;
-    void loadModels(const std::string manifest);
+    void loadModels(const std::string dirManifest);
 };
 
 #endif

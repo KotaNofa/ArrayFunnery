@@ -13,10 +13,12 @@
 #include <array>
 #include <thread>
 
-// In case you just want to load one model.
-void Model::ObjToModelParser(std::string name, Model& output) {
-    ObjToModelParser(name, output);
+
+/*
+void Model::ObjParse(std::string dirName, Model& output) {
+    std::cout << "please dont use this member function: ObjParse!" << std::endl;
 };
+
 
 // Multithreaded model loader. Shouldn't be too tough to adapt it to other file types. 
 void Scene::loadModels(const std::string manifest) {
@@ -58,3 +60,5 @@ void Scene::loadModels(const std::string manifest) {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
     std::cout << "Loaded " << list.size() << " models in " << duration.count() << "ms" << std::endl;
 };
+
+*/

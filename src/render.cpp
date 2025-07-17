@@ -11,21 +11,9 @@ struct Triangle {
 
 std::vector<Triangle> loadTris (const Scene& scene) {
 
-    Vertices tempVert;
+    Vertice tempVert;
     Triangle tempTri;
     std::vector<Triangle> triBuffer;
-
-    for (int i = 0; i < scene.models.size(); ++i) {
-        for (int j = 0; j < scene.models[i].indices.size(); ++j) {
-            for (int n = 0; n < 3; ++n) {
-                unsigned int sel = scene.models[i].indices[j].geo[n];
-                for (int k = 0; k < 3; ++k) {
-                    tempTri.geo[n][k] = scene.models[i].verts[sel].geo[k];
-                }
-            }
-            triBuffer.push_back(tempTri);
-        }
-    }
 
     return triBuffer;
 }
@@ -38,7 +26,7 @@ std::vector<Triangle> Transform(const std::vector<Triangle> &TriBuffer, const Vi
     for (int i = 0; i < screenBuffer.size(); ++i) {
         for (int n = 0; n < 3; ++n) {
             for (int j = 0; j < 3; ++j) {
-                screenBuffer[i].geo[n][j] += viewport.position[j];
+                screenBuffer[i].geo[n][j] -= viewport.position[j];
             }
         }
     }
@@ -46,8 +34,13 @@ std::vector<Triangle> Transform(const std::vector<Triangle> &TriBuffer, const Vi
     // 3d to 2d transformation
     for (int i = 0; i < TriBuffer.size(); ++i) {
         for (int n = 0; n < 3; ++n) {
-            screenBuffer[i].geo[n][0] /= screenBuffer[i].geo[n][2];
-            screenBuffer[i].geo[n][1] /= screenBuffer[i].geo[n][2];
+            // screenBuffer[i].geo[n][0] /= screenBuffer[i].geo[n][2];
+            // screenBuffer[i].geo[n][1] /= screenBuffer[i].geo[n][2];
+
+            // FOV = 2 * arctan(width / (2 * focalLength))
+
+            screenBuffer[i].geo[n][0] = 2 * atan(screenBuffer[i].geo[n][0] / (2 * 1));
+            screenBuffer[i].geo[n][1] *= 100;
         }
     }
 
@@ -55,13 +48,16 @@ std::vector<Triangle> Transform(const std::vector<Triangle> &TriBuffer, const Vi
 }
 
 //aggressive clamp for debug purposes
-void ClampZ(std::vector<Triangle>& screenBuffer) {
-    for (int i = screenBuffer.size() - 1; i >= 0; --i) {
+void ClampZ(std::vector<Triangle>& tris, float nearPlane = 0.01f) {
+    for (int i = (int)tris.size() - 1; i >= 0; --i) {
+        bool v[3] = {false,false,false};
         for (int j = 0; j < 3; ++j) {
-            if (screenBuffer[i].geo[j][2] >= 1.f) {
-                screenBuffer.erase(screenBuffer.begin() + i);
-                break;
-            }
+            if (tris[i].geo[j][2] < nearPlane)
+                v[j] = true;
+        }
+        // if all three verts are behind the plane, erase
+        if (v[0] && v[1] && v[2]) {
+            tris.erase(tris.begin() + i);
         }
     }
 }
