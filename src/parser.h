@@ -5,6 +5,6 @@
 
 #include <string>
 
-void ObjParse(std::string listDir, Model& output);
+void ObjParse(std::string modelDir, Model& output);
 
 #endif

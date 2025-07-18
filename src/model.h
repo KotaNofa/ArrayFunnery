@@ -17,15 +17,20 @@ struct Map {
 // software rendering structs
 class Model {
 public:
-    std::vector<Vertice>geometric;
-    std::vector<Vertice>normal;
-    std::vector<Map>uvs;
+    std::vector<Vertice>geometricVerts;
+    std::vector<Vertice>normalVerts;
+    std::vector<Map>uvsVerts;
 };
 
+/* 
+
+Dont use for now
 class Scene {
 public:
     std::vector<Model>models;
     void loadModels(const std::string dirManifest);
 };
+
+*/
 
 #endif

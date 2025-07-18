@@ -5,18 +5,7 @@
 #include <cmath>
 #include <iostream>
 
-struct Triangle {
-    float geo[3][3];
-};
-
-std::vector<Triangle> loadTris (const Scene& scene) {
-
-    Vertice tempVert;
-    Triangle tempTri;
-    std::vector<Triangle> triBuffer;
-
-    return triBuffer;
-}
+/*
 
 std::vector<Triangle> Transform(const std::vector<Triangle> &TriBuffer, const Viewport& viewport) {
 
@@ -96,3 +85,5 @@ void DrawVerts(const Scene& scene, const Viewport& viewport, sf::RenderWindow& w
     triBuffer.clear();
     screenBuffer.clear();
 }
+
+*/
