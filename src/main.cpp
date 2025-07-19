@@ -39,7 +39,7 @@ int main() {
     */
 
     Model cube;
-    ObjParse("model/cube.obj", cube);
+    cube.InitFromOBJ("model/cube.obj");
 
     Viewport camera;
     float cameraSpeed = 0.0033f; // Adjust as needed

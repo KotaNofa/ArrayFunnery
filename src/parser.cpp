@@ -19,7 +19,7 @@ void ObjParse(std::string modelDir, Model& output) {
     std::string lineBuffer;
     std::string dataType;
     float x, y, z;
-    std::array<std::string, 4>indexChunk;
+    std::array<std::string, 4>inputChunk;
 
     if (!file) {
         std::cout << "Failed to find " << modelDir << std::endl;
@@ -55,57 +55,37 @@ void ObjParse(std::string modelDir, Model& output) {
 
         // Push arranged data from tempModel into output according to its indices.
         else if (dataType == "f") {
-            stringRead >> indexChunk[0] >> indexChunk[1] >> indexChunk[2] >> indexChunk[3];
-            std::string tempStr;
-            // triangle indices case
-            if (indexChunk[3].empty()) {
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < indexChunk[i].size(); j++) {
-                        if (indexChunk[i].at(j) != '/') {
-                            tempStr.push_back(indexChunk[i].at(j));
+            stringRead >> inputChunk[0] >> inputChunk[1] >> inputChunk[2] >> inputChunk[3];
+            std::string outputIndex;
+            // Triangle indices case
+            if (inputChunk[3].empty()) {
+                // Pushes in geometric verts push according to each chunk's first number in it's indices.
+                for (int chunkIndex = 0; chunkIndex < 3; chunkIndex++) {
+                    for (int chunkCharIndex = 0; chunkCharIndex < inputChunk[chunkIndex].size(); chunkCharIndex++) {
+                        if (inputChunk[chunkIndex].at(chunkCharIndex) != '/') {
+                            // Reading in current indice chunk and pushing it back into outputIndex if it is not a backslash.
+                            outputIndex.push_back(inputChunk[chunkIndex].at(chunkCharIndex));
                         }
                         else {
                             // Delete chars up to the next occurance of '/'
-                            indexChunk[i].erase(0, indexChunk[i].find_first_of('/') + 1);
+                            inputChunk[chunkIndex].erase(0, inputChunk[chunkIndex].find_first_of('/') + 1);
                             break;
                         }
                     }
-                    output.geometricVerts.push_back(tempModel.geometricVerts.at(std::stoi(tempStr) - 1));
-                    tempStr.clear();
-                }
-                
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < indexChunk[i].size(); j++) {
-                        if (indexChunk[i].at(j) != '/') {
-                            tempStr.push_back(indexChunk[i].at(j));
-                        }
-                        else {
-                            indexChunk[i].erase(0, indexChunk[i].find_first_of('/') + 1);
-                            break;
-                        }
-                    }
-                    output.normalVerts.push_back(tempModel.normalVerts.at(std::stoi(tempStr) - 1));
-                    tempStr.clear();
-                }
-                
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < indexChunk[i].size(); j++) {
-                        if (indexChunk[i].at(j) != '/') {
-                            tempStr.push_back(indexChunk[i].at(j));
-                        }
-                        else {
-                            indexChunk[i].erase(0, indexChunk[i].find_first_of('/') + 1);
-                            break;
-                        }
-                    }
-                    output.uvsVerts.push_back(tempModel.uvsVerts.at(std::stoi(tempStr) - 1));
-                    tempStr.clear();
+                    // Pushes back index according to it's read-in string value, subtracted by one since OBJ is indexed at 1.
+                    output.geometricVerts.push_back(tempModel.geometricVerts.at(std::stoi(outputIndex) - 1));
+                    // Clears string index for next chunk.
+                    outputIndex.clear();
                 }
             }
-            // quad case, split into tris
+            // Quad case
             else {
-                // todo:
+                // todo: Split Quads into Tris
+                throw std::runtime_error("OBJ Doesn't support parsing quads right now.");
             }
+        // Parsing should be completed by    here
+        } else if (dataType == "") {
+            break;
         }
     }
 

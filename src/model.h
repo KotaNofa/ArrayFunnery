@@ -20,17 +20,8 @@ public:
     std::vector<Vertice>geometricVerts;
     std::vector<Vertice>normalVerts;
     std::vector<Map>uvsVerts;
+    Model();
+    void InitFromOBJ(std::string dirName);
 };
-
-/* 
-
-Dont use for now
-class Scene {
-public:
-    std::vector<Model>models;
-    void loadModels(const std::string dirManifest);
-};
-
-*/
 
 #endif

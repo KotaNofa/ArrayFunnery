@@ -13,6 +13,13 @@
 #include <array>
 #include <thread>
 
+Model::Model() {
+};
+
+void Model::InitFromOBJ(std::string dirName) {
+    ObjParse(dirName, *this);
+};
+
 
 /*
 void Model::ObjParse(std::string dirName, Model& output) {
