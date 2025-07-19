@@ -59,18 +59,9 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
         }
-        window.clear(sf::Color::Green);
+        window.clear(sf::Color{128, 224, 197});
 
-        
-
-
-
-
-
-
-
-
-        
+        DrawModelGeometricVerts(cube,camera,window);
         
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // Or RShift
             
