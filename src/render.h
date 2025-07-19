@@ -6,6 +6,6 @@
 
 #include "SFML/Graphics.hpp"
 
-void DrawVerts(const Model& scene, const Viewport& viewport, sf::RenderWindow& window);
+void DrawModelGeometricVerts(const Model& scene, const Viewport& viewport, sf::RenderWindow& window);
 
 #endif

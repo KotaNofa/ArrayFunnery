@@ -5,6 +5,14 @@
 #include <cmath>
 #include <iostream>
 
+void DrawModelGeometricVerts(const Model& scene, const Viewport& viewport, sf::RenderWindow& window) {
+
+    
+
+
+
+}
+
 /*
 
 std::vector<Triangle> Transform(const std::vector<Triangle> &TriBuffer, const Viewport& viewport) {

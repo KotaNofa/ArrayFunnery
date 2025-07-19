@@ -80,7 +80,7 @@ void ObjParse(std::string modelDir, Model& output) {
             }
             // Quad case
             else {
-                // todo: Split Quads into Tris
+                // TODO: Split Quads into Tris
                 throw std::runtime_error("OBJ Doesn't support parsing quads right now.");
             }
         // Parsing should be completed by    here
@@ -89,41 +89,7 @@ void ObjParse(std::string modelDir, Model& output) {
         }
     }
 
-    /*
-        // find largest 
-    size_t largestIndex = std::max({v_geos.size(), v_normals.size(), v_uvs.size()});
-    // resize to largest index found in list
-    output.verts.resize(largestIndex);
-    // copying to output
-    for (int i = 0; i < largestIndex; ++i) {
-        if (i < v_geos.size()) {
-        output.verts[i].geo[0] = v_geos[i][0];
-        output.verts[i].geo[1] = v_geos[i][1];
-        output.verts[i].geo[2] = v_geos[i][2];
-
-        output.verts[i].normal[0] = v_normals[i][0];
-        output.verts[i].normal[1] = v_normals[i][1];
-        output.verts[i].normal[2] = v_normals[i][2];
-
-        output.verts[i].uv[0] = {v_uvs[i][0]};
-        output.verts[i].uv[1] = {v_uvs[i][1]};
-        }
-        else {break;}
-    }
-
-    output.indices.resize(i_geos.size());
-    for (size_t i = 0; i < i_geos.size(); ++i) {
-        output.indices[i].geo[0] = i_geos[i][0];
-        output.indices[i].geo[1] = i_geos[i][1];
-        output.indices[i].geo[2] = i_geos[i][2];
-    }
-
-     */
-
-    std::cout << "   " << modelDir << " has total vert count of " << tempModel.normalVerts.size() << ". That's big, right?" << std::endl;
-    // std::cout << output.verts[0].geo[0] << std::endl;
-    // std::cout << output.verts[0].geo[1] << std::endl;
-    // std::cout << output.verts[0].geo[2] << std::endl;
-    // std::cout << std::endl;
+    std::cout << "   " << modelDir << " has total triangle count of " << (output.geometricVerts.size() / 3) << ". That's big, right?" << std::endl;
+    return;
 };
 
