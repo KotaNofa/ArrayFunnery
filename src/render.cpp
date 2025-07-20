@@ -5,15 +5,36 @@
 #include <cmath>
 #include <iostream>
 
-/*
-void Translate(const Model& model, const Viewport& viewport) {
-    for (int vertIndex = 0; vertIndex < model.geometricVerts.size(); vertIndex++) {
-        for (int dimension = 0; dimension < 3; dimension++) {
-            model.geometricVerts[vertIndex].x = 
-        }
+void CopyInputIntoBuffer(const Model& input, Model& output) {
+    for (int vertIndex = 0; vertIndex < input.geometricVerts.size(); vertIndex++) {
+        output.geometricVerts.push_back(input.geometricVerts[vertIndex]);
     }
 }
-*/
+
+void Translate(Model& output, const Viewport& viewport) {
+    for (int vertIndex = 0; vertIndex < output.geometricVerts.size(); vertIndex++) {
+        output.geometricVerts[vertIndex].x += viewport.x;
+        output.geometricVerts[vertIndex].y += viewport.y;
+        output.geometricVerts[vertIndex].z += viewport.z;
+    }
+}
+
+void Scale(Model& output, const Viewport& viewport) {
+    for (int vertIndex = 0; vertIndex < output.geometricVerts.size(); vertIndex++) {
+        output.geometricVerts[vertIndex].x *= 500;
+        output.geometricVerts[vertIndex].y *= 500;
+        output.geometricVerts[vertIndex].z *= 500;
+    }
+}
+
+void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
+    for (int vertIndex = 0; vertIndex < input.geometricVerts.size(); ++vertIndex) {
+        sf::Vector2f position(input.geometricVerts[vertIndex].x, input.geometricVerts[vertIndex].y);
+        sf::Vector2f texCoords(input.uvsVerts[vertIndex].x, input.uvsVerts[vertIndex].y);
+        vertHeap.append(sf::Vertex(position, sf::Color::White, texCoords));
+    }
+}
+
 
 void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::RenderWindow& window) {
 
@@ -24,9 +45,18 @@ void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::R
     // It is best to use a matrix where all transformations will initiate onto this indentity matrix.
     // After that, we have to convert the data heap into a sf::Vertex with appropriate texture coords and such.
 
+    sf::Texture texture;
+    if (!texture.loadFromFile("model/LaikaDiffuse.png")) {
+        // handle error
+    }
 
-
+    Model modelBuffer;
     sf::VertexArray vertHeap(sf::Triangles);
+
+    CopyInputIntoBuffer(model, modelBuffer);
+    Translate(modelBuffer, viewport);
+    Scale(modelBuffer, viewport);
+    InsertModelIntoVertexArray(modelBuffer, vertHeap);
 
     // Test triangle.
     sf::VertexArray triangle(sf::Triangles, 3);

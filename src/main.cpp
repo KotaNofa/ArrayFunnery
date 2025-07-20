@@ -39,11 +39,11 @@ int main() {
     */
 
     Model cube;
-    cube.InitFromOBJ("model/cube.obj");
+    cube.InitFromOBJ("model/trika.obj");
 
     Viewport camera;
-    float cameraSpeed = 0.0033f; // Adjust as needed
-    camera.position[2] = 0.f;
+    float cameraSpeed = 0.1; // Adjust as needed
+    camera.z = 0.f;
 
     // draw window
     sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
@@ -88,9 +88,9 @@ int main() {
         }
 
         std::cout << "\r"
-          << "Cam X: " << camera.position[0]
-          << " | Cam Y: " << camera.position[1]
-          << " | Cam Z: " << camera.position[2]
+          << "Cam X: " << camera.x
+          << " | Cam Y: " << camera.y
+          << " | Cam Z: " << camera.z
           << "      " // padding to clear leftovers
           << std::flush;
 
@@ -102,7 +102,7 @@ int main() {
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Invalid input. Enter a numeric Z value: ";
             }
-            camera.position[2] = input;
+            camera.z = input;
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
 

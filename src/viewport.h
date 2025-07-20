@@ -5,8 +5,8 @@
 
 class Viewport {
     public:
-    float position[3];
-    float rotation[3];
+    float x, y, z;
+    float rx, ry, rz;
 
     Viewport();
 

@@ -1,29 +1,29 @@
 #include "viewport.h"
 
 Viewport::Viewport() {
-    position[0] = 0;
-    position[1] = 0;
-    position[2] = 0;
-    rotation[0] = 0;
-    rotation[1] = 0;
-    rotation[2] = 0;
+    x = 0;
+    y = 0;
+    z = 0;
+    rx = 0;
+    ry = 0;
+    rz = 0;
 };
 
 void Viewport::TranslateX(float input) {
-    position[0] += input;
+    x += input;
 };
 void Viewport::TranslateY(float input) {
-    position[1] += input;
+    y += input;
 };
 void Viewport::TranslateZ(float input) {
-    position[2] += input;
+    z += input;
 };
 void Viewport::RotateX(float input) {
-    rotation[0] += input;
+    rx += input;
 };
 void Viewport::RotateY(float input) {
-    rotation[1] += input;
+    ry += input;
 };
 void Viewport::RotateZ(float input) {
-    rotation[2] += input;
+    rz += input;
 };
