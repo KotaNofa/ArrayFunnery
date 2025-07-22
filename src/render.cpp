@@ -46,7 +46,7 @@ void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::R
     // After that, we have to convert the data heap into a sf::Vertex with appropriate texture coords and such.
 
     sf::Texture texture;
-    if (!texture.loadFromFile("model/LaikaDiffuse.png")) {
+    if (!texture.loadFromFile("texture/LaikaDiffuse.png")) {
         // handle error
     }
 
