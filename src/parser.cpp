@@ -50,21 +50,21 @@ void ObjParse(std::string modelDir, Model& output) {
         if (dataType == "v") {
             stringRead >> x >> y >> z;
             geometricBuffer.push_back({x , y, z});
-            std::cout << "in Geometry: " << x << " " << y << " " << z << std::endl;
+            // std::cout << "in Geometry: " << x << " " << y << " " << z << std::endl;
         }
 
         // Normal Vertice
         else if (dataType == "vn") {
             stringRead >> x >> y >> z;
             normalBuffer.push_back({x , y, z});
-            std::cout << "in Normal: " << x << " " << y << " " << z << std::endl;            
+            // std::cout << "in Normal: " << x << " " << y << " " << z << std::endl;            
         }
 
         // UV Vertice
         else if (dataType == "vt") {
             stringRead >> x >> y;
             uvBuffer.push_back({x , y});
-            std::cout << "in UV: " << x << " " << y << std::endl;
+            // std::cout << "in UV: " << x << " " << y << std::endl;
         }
 
         else if (dataType == "f") {
@@ -77,7 +77,7 @@ void ObjParse(std::string modelDir, Model& output) {
         }
     }
     
-    std::cout << "End of data, building model..." << std::endl;
+    // std::cout << "End of data, building model..." << std::endl;
 
     for (int triIndex = 0; triIndex < TriangleBuffer.size(); triIndex++) {
         for (int chunkIndex = 0; chunkIndex < 3; chunkIndex++) {
@@ -113,7 +113,7 @@ void ObjParse(std::string modelDir, Model& output) {
         }
     }
 
-    std::cout << "   " << modelDir << " has total triangle count of " << output.vertices.size() / 3 << ". That's big, right?" << std::endl;
+    // std::cout << "   " << modelDir << " has total triangle count of " << output.vertices.size() / 3 << ". That's big, right?" << std::endl;
     return;
 };
 

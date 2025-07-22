@@ -19,11 +19,14 @@ void Translate(Model& output, const Viewport& viewport) {
     }
 }
 
-void Scale(Model& output, const Viewport& viewport) {
+void Scale(Model& output, const Viewport& viewport, sf::Texture& texture) {
     for (int vertIndex = 0; vertIndex < output.vertices.size(); vertIndex++) {
+        float scale;
         output.vertices[vertIndex].geometricCoord.x *= 500;
         output.vertices[vertIndex].geometricCoord.y *= 500;
         output.vertices[vertIndex].geometricCoord.z *= 500;
+        output.vertices[vertIndex].uvCoord.x *= texture.getSize().x;
+        output.vertices[vertIndex].uvCoord.y *= texture.getSize().y;
     }
 }
 
@@ -34,6 +37,20 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
         vertHeap.append(sf::Vertex(position, sf::Color::White, texCoords));
     }
 }
+
+void RotateZ(Model& output, float angleRadians) {
+    float cosA = std::cos(angleRadians);
+    float sinA = std::sin(angleRadians);
+
+    for (auto& vertex : output.vertices) {
+        float x = vertex.geometricCoord.x;
+        float y = vertex.geometricCoord.y;
+
+        vertex.geometricCoord.x = x * cosA - y * sinA;
+        vertex.geometricCoord.y = x * sinA + y * cosA;
+    }
+}
+
 
 
 void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::RenderWindow& window) {
@@ -46,16 +63,17 @@ void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::R
     // After that, we have to convert the data heap into a sf::Vertex with appropriate texture coords and such.
 
     sf::Texture texture;
-    if (!texture.loadFromFile("texture/LaikaDiffuse.png")) {
+    if (!texture.loadFromFile("texture/bitch.png")) {
         // handle error
     }
 
     Model modelBuffer;
     sf::VertexArray vertHeap(sf::Triangles);
 
+    RotateZ(modelBuffer, 6.f);
     CopyInputIntoBuffer(model, modelBuffer);
     Translate(modelBuffer, viewport);
-    Scale(modelBuffer, viewport);
+    Scale(modelBuffer, viewport, texture);
     InsertModelIntoVertexArray(modelBuffer, vertHeap);
 
     // Test triangle.
@@ -71,6 +89,9 @@ void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::R
     vertHeap.append(triangle[2]);
     // Test triangle.
     
-    window.draw(vertHeap);
+    sf::RenderStates states;
+    states.texture = &texture;
+    window.draw(vertHeap, states);
+
 
 }
