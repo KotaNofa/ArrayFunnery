@@ -6,31 +6,31 @@
 #include <iostream>
 
 void CopyInputIntoBuffer(const Model& input, Model& output) {
-    for (int vertIndex = 0; vertIndex < input.geometricVerts.size(); vertIndex++) {
-        output.geometricVerts.push_back(input.geometricVerts[vertIndex]);
+    for (int vertIndex = 0; vertIndex < input.vertices.size(); vertIndex++) {
+        output.vertices.push_back(input.vertices[vertIndex]);
     }
 }
 
 void Translate(Model& output, const Viewport& viewport) {
-    for (int vertIndex = 0; vertIndex < output.geometricVerts.size(); vertIndex++) {
-        output.geometricVerts[vertIndex].x += viewport.x;
-        output.geometricVerts[vertIndex].y += viewport.y;
-        output.geometricVerts[vertIndex].z += viewport.z;
+    for (int vertIndex = 0; vertIndex < output.vertices.size(); vertIndex++) {
+        output.vertices[vertIndex].geometricCoord.x += viewport.x;
+        output.vertices[vertIndex].geometricCoord.y += viewport.y;
+        output.vertices[vertIndex].geometricCoord.z += viewport.z;
     }
 }
 
 void Scale(Model& output, const Viewport& viewport) {
-    for (int vertIndex = 0; vertIndex < output.geometricVerts.size(); vertIndex++) {
-        output.geometricVerts[vertIndex].x *= 500;
-        output.geometricVerts[vertIndex].y *= 500;
-        output.geometricVerts[vertIndex].z *= 500;
+    for (int vertIndex = 0; vertIndex < output.vertices.size(); vertIndex++) {
+        output.vertices[vertIndex].geometricCoord.x *= 500;
+        output.vertices[vertIndex].geometricCoord.y *= 500;
+        output.vertices[vertIndex].geometricCoord.z *= 500;
     }
 }
 
 void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
-    for (int vertIndex = 0; vertIndex < input.geometricVerts.size(); ++vertIndex) {
-        sf::Vector2f position(input.geometricVerts[vertIndex].x, input.geometricVerts[vertIndex].y);
-        sf::Vector2f texCoords(input.uvsVerts[vertIndex].x, input.uvsVerts[vertIndex].y);
+    for (int vertIndex = 0; vertIndex < input.vertices.size(); ++vertIndex) {
+        sf::Vector2f position(input.vertices[vertIndex].geometricCoord.x, input.vertices[vertIndex].geometricCoord.y);
+        sf::Vector2f texCoords(input.vertices[vertIndex].uvCoord.x, input.vertices[vertIndex].uvCoord.y);
         vertHeap.append(sf::Vertex(position, sf::Color::White, texCoords));
     }
 }

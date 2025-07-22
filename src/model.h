@@ -4,22 +4,26 @@
 #include <vector>
 #include <string>
 
-// for vertices in 3D space
-struct Vertice {
+struct Vector3f {
     float x, y, z;
 };
 
-// for UV coords in 2D space
-struct Map {
+struct Vector2f {
     float x, y;
+};
+
+// for vertices in 3D space
+struct Vertex {
+    Vector3f geometricCoord;
+    Vector3f normalCoord;
+    Vector2f uvCoord;
 };
 
 // software rendering structs
 class Model {
 public:
-    std::vector<Vertice>geometricVerts;
-    std::vector<Vertice>normalVerts;
-    std::vector<Map>uvsVerts;
+    std::string name;
+    std::vector<Vertex> vertices;
     Model();
     void InitFromOBJ(std::string dirName);
 };

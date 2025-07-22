@@ -1,5 +1,4 @@
 #include "parser.h"
-
 #include "model.h"
 
 #include <array>
@@ -7,19 +6,19 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <thread>
 #include <iostream>
-#include <chrono>
-#include <algorithm>
 
 void ObjParse(std::string modelDir, Model& output) {
 
+    std::vector<Vector3f> geometricBuffer;
+    std::vector<Vector3f> normalBuffer;
+    std::vector<Vector2f> uvBuffer;
+    std::vector<std::array<std::string, 4>> TriangleBuffer; // kill me
+
     std::ifstream file(modelDir);
-    Model tempModel;
     std::string lineBuffer;
     std::string dataType;
-    float x, y, z;
-    std::array<std::string, 4>inputChunk;
+    bool ObjectLoaded = false; // For now, this just prevents you from parsing an OBJ with multiple objects in it.
 
     if (!file) {
         std::cout << "Failed to find " << modelDir << std::endl;
@@ -31,65 +30,90 @@ void ObjParse(std::string modelDir, Model& output) {
 
         std::stringstream stringRead(lineBuffer);
         stringRead >> dataType;
+        float x, y, z;
+        std::array<std::string, 4>indice;
+
+        // Object Name
+        if (dataType == "o") {
+            if (ObjectLoaded == false) {
+                std::string name;
+                stringRead >> name;
+                output.name = name;
+                std::cout << "in Name: " << name << std::endl;
+                ObjectLoaded = true;
+            } else {
+                throw std::runtime_error("Second object detected in OBJ, this is not allowed right now");
+            }
+        }
 
         // Geometric Vertice
         if (dataType == "v") {
             stringRead >> x >> y >> z;
-            tempModel.geometricVerts.push_back({x , y, z});
-            std::cout << "Vert Geometry: " << x << " " << y << " " << z << std::endl;
+            geometricBuffer.push_back({x , y, z});
+            std::cout << "in Geometry: " << x << " " << y << " " << z << std::endl;
         }
 
         // Normal Vertice
         else if (dataType == "vn") {
             stringRead >> x >> y >> z;
-            tempModel.normalVerts.push_back({x , y, z});
-            std::cout << "Vert Normal: " << x << " " << y << " " << z << std::endl;            
+            normalBuffer.push_back({x , y, z});
+            std::cout << "in Normal: " << x << " " << y << " " << z << std::endl;            
         }
 
         // UV Vertice
         else if (dataType == "vt") {
             stringRead >> x >> y;
-            tempModel.uvsVerts.push_back({x , y});
-            std::cout << "Vert UV: " << x << " " << y << std::endl;
+            uvBuffer.push_back({x , y});
+            std::cout << "in UV: " << x << " " << y << std::endl;
         }
 
-        // Push arranged data from tempModel into output according to its indices.
         else if (dataType == "f") {
-            stringRead >> inputChunk[0] >> inputChunk[1] >> inputChunk[2] >> inputChunk[3];
-            std::string outputIndex;
-            // Triangle indices case
-            if (inputChunk[3].empty()) {
-                // Pushes in geometric verts push according to each chunk's first number in it's indices.
-                for (int chunkIndex = 0; chunkIndex < 3; chunkIndex++) {
-                    for (int chunkCharIndex = 0; chunkCharIndex < inputChunk[chunkIndex].size(); chunkCharIndex++) {
-                        if (inputChunk[chunkIndex].at(chunkCharIndex) != '/') {
-                            // Reading in current indice chunk and pushing it back into outputIndex if it is not a backslash.
-                            outputIndex.push_back(inputChunk[chunkIndex].at(chunkCharIndex));
-                        }
-                        else {
-                            // Delete chars up to the next occurance of '/'
-                            inputChunk[chunkIndex].erase(0, inputChunk[chunkIndex].find_first_of('/') + 1);
-                            break;
-                        }
-                    }
-                    // Pushes back index according to it's read-in string value, subtracted by one since OBJ is indexed at 1.
-                    output.geometricVerts.push_back(tempModel.geometricVerts.at(std::stoi(outputIndex) - 1));
-                    // Clears string index for next chunk.
-                    outputIndex.clear();
-                }
-            }
-            // Quad case
-            else {
-                // TODO: Split Quads into Tris
-                throw std::runtime_error("OBJ Doesn't support parsing quads right now.");
-            }
-        // Parsing should be completed by    here
-        } else if (dataType == "") {
+            stringRead >> indice[0] >> indice[1] >> indice[2] >> indice[3];
+            TriangleBuffer.push_back({indice[0],indice[1],indice[2],indice[3]});
+        }
+
+        else if (dataType == "") {
             break;
         }
     }
+    
+    std::cout << "End of data, building model..." << std::endl;
 
-    std::cout << "   " << modelDir << " has total triangle count of " << (output.geometricVerts.size() / 3) << ". That's big, right?" << std::endl;
+    for (int triIndex = 0; triIndex < TriangleBuffer.size(); triIndex++) {
+        for (int chunkIndex = 0; chunkIndex < 3; chunkIndex++) {
+            std::string& chunk = TriangleBuffer[triIndex][chunkIndex];
+            std::stringstream chunkStream(chunk);
+            std::string indexStr;
+            int dataSel = 0;
+
+            Vertex assembledFrame;
+
+            while (std::getline(chunkStream, indexStr, '/')) {
+                if (indexStr.empty()) {
+                    ++dataSel;
+                    continue;
+                }
+
+                int index = std::stoi(indexStr) - 1; // OBJ is 1-based
+                switch (dataSel) {
+                    case 0:
+                        assembledFrame.geometricCoord = geometricBuffer.at(index);
+                        break;
+                    case 1:
+                        assembledFrame.uvCoord = uvBuffer.at(index);
+                        break;
+                    case 2:
+                        assembledFrame.normalCoord = normalBuffer.at(index);
+                        break;
+                }
+                ++dataSel;
+            }
+
+            output.vertices.push_back(assembledFrame);
+        }
+    }
+
+    std::cout << "   " << modelDir << " has total triangle count of " << output.vertices.size() / 3 << ". That's big, right?" << std::endl;
     return;
 };
 

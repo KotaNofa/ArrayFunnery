@@ -39,7 +39,7 @@ int main() {
     */
 
     Model cube;
-    cube.InitFromOBJ("model/trika.obj");
+    cube.InitFromOBJ("model/cube.obj");
 
     Viewport camera;
     float cameraSpeed = 0.1; // Adjust as needed
