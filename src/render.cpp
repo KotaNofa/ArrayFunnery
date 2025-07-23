@@ -38,22 +38,19 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
     }
 }
 
-void RotateZ(Model& output, float angleRadians) {
-    float cosA = std::cos(angleRadians);
-    float sinA = std::sin(angleRadians);
-
+void CullBackface(Model& output) {
+    Model buffer;
+    int index = 0;
     for (auto& vertex : output.vertices) {
-        float x = vertex.geometricCoord.x;
-        float y = vertex.geometricCoord.y;
-
-        vertex.geometricCoord.x = x * cosA - y * sinA;
-        vertex.geometricCoord.y = x * sinA + y * cosA;
+        index++;
+        if (output.vertices[index].geometricCoord.z < -0.5f) {
+            buffer.vertices.push_back(output.vertices[index]);
+        }
     }
+    output.vertices = buffer.vertices;
 }
 
-
-
-void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::RenderWindow& window) {
+void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const Viewport& viewport, sf::RenderWindow& window) {
 
     // We've just passed in model data, camera, and window context.
     // sf::VertexArray expects a 2D data structure. 
@@ -62,19 +59,15 @@ void DrawModelGeometricVerts(const Model& model, const Viewport& viewport, sf::R
     // It is best to use a matrix where all transformations will initiate onto this indentity matrix.
     // After that, we have to convert the data heap into a sf::Vertex with appropriate texture coords and such.
 
-    sf::Texture texture;
-    if (!texture.loadFromFile("texture/bitch.png")) {
-        // handle error
-    }
-
     Model modelBuffer;
     sf::VertexArray vertHeap(sf::Triangles);
 
-    RotateZ(modelBuffer, 6.f);
     CopyInputIntoBuffer(model, modelBuffer);
     Translate(modelBuffer, viewport);
     Scale(modelBuffer, viewport, texture);
+    CullBackface(modelBuffer);
     InsertModelIntoVertexArray(modelBuffer, vertHeap);
+
 
     // Test triangle.
     sf::VertexArray triangle(sf::Triangles, 3);
