@@ -65,26 +65,10 @@ void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const View
     CopyInputIntoBuffer(model, modelBuffer);
     Translate(modelBuffer, viewport);
     Scale(modelBuffer, viewport, texture);
-    CullBackface(modelBuffer);
     InsertModelIntoVertexArray(modelBuffer, vertHeap);
-
-
-    // Test triangle.
-    sf::VertexArray triangle(sf::Triangles, 3);
-    triangle[0].position = sf::Vector2f(100, 100);
-    triangle[1].position = sf::Vector2f(200, 200);
-    triangle[2].position = sf::Vector2f(100, 200);
-    triangle[0].color = sf::Color::Red;
-    triangle[1].color = sf::Color::Green;
-    triangle[2].color = sf::Color::Blue;
-    vertHeap.append(triangle[0]);
-    vertHeap.append(triangle[1]);
-    vertHeap.append(triangle[2]);
-    // Test triangle.
     
     sf::RenderStates states;
     states.texture = &texture;
     window.draw(vertHeap, states);
-
-
+    
 }

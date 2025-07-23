@@ -61,9 +61,9 @@ int main() {
     */
 
     Model cube;
-    cube.InitFromOBJ("model/trika.obj");
     sf::Texture texture;
-    if (!texture.loadFromFile("texture/LaikaDiffuse.png")) {
+    cube.InitFromOBJ("model/cube.obj");
+    if (!texture.loadFromFile("texture/cube.png")) {
         // handle error
     }
 
@@ -81,29 +81,25 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
-        // close on escape
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
             window.close();
         }
+
         window.clear(sf::Color{128, 224, 197});
+        DrawModelGeometricVerts(cube, texture,  camera, window);
 
-
-        DrawModelGeometricVerts(cube, texture,camera,window);
-        
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) { // Or RShift
-            
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {   
         }
-
         // Inside your game loop (outside the event loop)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
             float amount = 0;
             amount = 1.01;
-            ScaleUV(cube, amount);
+            // ScaleUV(cube, amount);
+            RotateGeometryY(cube, -0.1f);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            float amount = 0;
-            amount = .99f;
-            ScaleUV(cube, amount);
+            // ScaleUV(cube, .99f);
+            RotateGeometryY(cube, 0.1f);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
             camera.TranslateX(-cameraSpeed);
@@ -114,10 +110,10 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             camera.TranslateY(-cameraSpeed);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) { // Or RShift
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
             camera.TranslateY(cameraSpeed);
         }
-
+        /*
         std::cout << "\r"
           << "Cam X: " << camera.x
           << " | Cam Y: " << camera.y
@@ -125,7 +121,7 @@ int main() {
           << "      " // padding to clear leftovers
           << std::flush;
 
-        /*
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
             std::cout << "\nEnter camera Z value: ";
             float input;
@@ -138,7 +134,7 @@ int main() {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
         }
             */
-        RotateGeometryY(cube, 0.1f);
+        //  RotateGeometryY(cube, 0.1f);
 
         window.display();
     }
