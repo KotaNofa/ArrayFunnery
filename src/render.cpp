@@ -11,6 +11,12 @@ void CopyInputIntoBuffer(const Model& input, Model& output) {
     }
 }
 
+void CullBackface(Model& output) {
+    for (int i = 0; i < output.vertices.size(); ++i) {
+               
+    }
+}
+
 void Translate(Model& output, const Viewport& viewport) {
     for (int vertIndex = 0; vertIndex < output.vertices.size(); vertIndex++) {
         output.vertices[vertIndex].geometricCoord.x += viewport.x;
@@ -19,12 +25,12 @@ void Translate(Model& output, const Viewport& viewport) {
     }
 }
 
-void Scale(Model& output, const Viewport& viewport, sf::Texture& texture) {
+void Scale(Model& output, const Viewport& viewport, sf::Texture& texture, int amount) {
     for (int vertIndex = 0; vertIndex < output.vertices.size(); vertIndex++) {
         float scale;
-        output.vertices[vertIndex].geometricCoord.x *= 500;
-        output.vertices[vertIndex].geometricCoord.y *= 500;
-        output.vertices[vertIndex].geometricCoord.z *= 500;
+        output.vertices[vertIndex].geometricCoord.x *= amount;
+        output.vertices[vertIndex].geometricCoord.y *= amount;
+        output.vertices[vertIndex].geometricCoord.z *= amount;
         output.vertices[vertIndex].uvCoord.x *= texture.getSize().x;
         output.vertices[vertIndex].uvCoord.y *= texture.getSize().y;
     }
@@ -36,18 +42,6 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
         sf::Vector2f texCoords(input.vertices[vertIndex].uvCoord.x, input.vertices[vertIndex].uvCoord.y);
         vertHeap.append(sf::Vertex(position, sf::Color::White, texCoords));
     }
-}
-
-void CullBackface(Model& output) {
-    Model buffer;
-    int index = 0;
-    for (auto& vertex : output.vertices) {
-        index++;
-        if (output.vertices[index].geometricCoord.z < -0.5f) {
-            buffer.vertices.push_back(output.vertices[index]);
-        }
-    }
-    output.vertices = buffer.vertices;
 }
 
 void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const Viewport& viewport, sf::RenderWindow& window) {
@@ -64,7 +58,7 @@ void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const View
 
     CopyInputIntoBuffer(model, modelBuffer);
     Translate(modelBuffer, viewport);
-    Scale(modelBuffer, viewport, texture);
+    Scale(modelBuffer, viewport, texture, 100);
     InsertModelIntoVertexArray(modelBuffer, vertHeap);
     
     sf::RenderStates states;
