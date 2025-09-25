@@ -34,36 +34,10 @@ void RotateGeometryY(Model& in, float angleRadians) {
 
 int main() {
 
-    /*
-    // load font
-    sf::Font font;
-    if (!font.loadFromFile("font/boubasfont.ttf")) {
-        return 1;
-    }
-
-    // Hello world text object
-    sf::Text jeff("Hi! I'm Koka!", font, 30);
-    jeff.setPosition(960,540);
-    jeff.setFillColor(sf::Color::White);
-
-    // create image
-    sf::Image image;
-    image.loadFromFile("texture/bitch.png");
-
-    // pass to texture to be drawn
-    sf::Texture texture;
-    texture.loadFromImage(image);
-    
-    // pass to sprite
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.setPosition(400, 400);
-    */
-
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("model/cube.obj");
-    if (!texture.loadFromFile("texture/cube.png")) {
+    cube.InitFromOBJ("model/laikaRig.obj");
+    if (!texture.loadFromFile("texture/laikaUV.png")) {
         // handle error
     }
 
@@ -90,10 +64,11 @@ int main() {
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {   
         }
-        // Inside your game loop (outside the event loop)
+        if (event.type == sf::Event::MouseWheelScrolled) {
+            float amount = event.mouseWheel.delta;
+            RotateGeometryY(cube, amount);
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-            float amount = 0;
-            amount = 1.01;
             // ScaleUV(cube, amount);
             RotateGeometryY(cube, -0.1f);
         }
@@ -113,28 +88,6 @@ int main() {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
             camera.TranslateY(cameraSpeed);
         }
-        /*
-        std::cout << "\r"
-          << "Cam X: " << camera.x
-          << " | Cam Y: " << camera.y
-          << " | Cam Z: " << camera.z
-          << "      " // padding to clear leftovers
-          << std::flush;
-
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-            std::cout << "\nEnter camera Z value: ";
-            float input;
-            while (!(std::cin >> input)) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Invalid input. Enter a numeric Z value: ";
-            }
-            camera.z = input;
-            std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        }
-            */
-        //  RotateGeometryY(cube, 0.1f);
 
         window.display();
     }
