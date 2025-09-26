@@ -1,5 +1,4 @@
 #include "render.h"
-#include "globals.h"
 #include "SFML/Graphics.hpp"
 #include <vector>
 #include <cmath>

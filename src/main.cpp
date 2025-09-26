@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "globals.h"
-#include "render.h"
-#include "parser.h"
+#include "gfx/render.h"
+#include "gfx/parser.h"
 
 #include <cmath>
 #include <iostream>
@@ -36,8 +36,8 @@ int main() {
 
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("model/triCube.obj");
-    if (!texture.loadFromFile("texture/triCube.png")) {
+    cube.InitFromOBJ("assets/model/triCube.obj");
+    if (!texture.loadFromFile("assets/texture/triCube.png")) {
         // handle error
     }
 
