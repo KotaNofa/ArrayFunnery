@@ -12,6 +12,7 @@
                 "src/gfx/parser.cpp",
                 "src/gfx/viewport.cpp",
                 "src/gfx/render.cpp",
+                "src/math/mat4.cpp",
                 "src/globals.cpp",
                 "-o",
                 "Koka3D",

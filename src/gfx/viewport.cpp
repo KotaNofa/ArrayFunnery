@@ -1,6 +1,8 @@
 #include "viewport.h"
 
 Viewport::Viewport() {
+    xRes = winWidth;
+    yRes = winHeight;
     x = 0;
     y = 0;
     z = 0;

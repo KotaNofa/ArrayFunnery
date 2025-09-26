@@ -1,10 +1,14 @@
 #ifndef VIEWPORT_H
 #define VIEWPORT_H
 
+#include "../globals.h"
+
 #include <vector>
+
 
 class Viewport {
     public:
+    float xRes, yRes;
     float x, y, z;
     float rx, ry, rz;
 
