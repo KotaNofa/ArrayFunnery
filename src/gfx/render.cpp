@@ -21,13 +21,24 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
     }
 }
 
+void Transform(Model model, Viewport viewport) {
+    // Cull Backface
+    // Sort Remaining
+    // Scale
+    // Rotate
+    // Translate
+    // Project
+
+    // mat4f M = T * S * S;
+}
+
 
 void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const Viewport& viewport, sf::RenderWindow& window) {
 
     Model modelBuffer;
     CopyInputIntoBuffer(model, modelBuffer);
 
-    
+    Transform(modelBuffer, viewport);    
 
     sf::VertexArray vertHeap(sf::Triangles);
     InsertModelIntoVertexArray(modelBuffer, vertHeap);
