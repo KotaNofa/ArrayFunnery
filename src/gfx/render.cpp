@@ -13,7 +13,7 @@ void CopyInputIntoBuffer(const Model& input, Model& output) {
 
 void CullBackface(Model& output) {
     for (int i = 0; i < output.vertices.size(); ++i) {
-               
+        // this is long overdue and needs to be implemented
     }
 }
 
@@ -58,7 +58,7 @@ void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const View
 
     CopyInputIntoBuffer(model, modelBuffer);
     Translate(modelBuffer, viewport);
-    Scale(modelBuffer, viewport, texture, 100);
+    Scale(modelBuffer, viewport, texture, 500);
     InsertModelIntoVertexArray(modelBuffer, vertHeap);
     
     sf::RenderStates states;

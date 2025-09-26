@@ -49,7 +49,7 @@ void ObjParse(std::string modelDir, Model& output) {
         // Geometric Vertice
         if (dataType == "v") {
             stringRead >> x >> y >> z;
-            geometricBuffer.push_back({x , y, z});
+            geometricBuffer.push_back({x , -y, z});
             // std::cout << "in Geometry: " << x << " " << y << " " << z << std::endl;
         }
 

@@ -36,8 +36,8 @@ int main() {
 
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("model/laikaRig.obj");
-    if (!texture.loadFromFile("texture/laikaUV.png")) {
+    cube.InitFromOBJ("model/triCube.obj");
+    if (!texture.loadFromFile("texture/triCube.png")) {
         // handle error
     }
 
