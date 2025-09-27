@@ -25,12 +25,13 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
 
 void Transform(Model& in, const Viewport& viewport) {
     mat4f tfMat;
-    tfMat.Translate(500,500,0);
     tfMat.RotateX(viewport.rx);
     tfMat.RotateY(viewport.ry);
     tfMat.RotateZ(viewport.rz);
-    tfMat.Translate(0,-250,0);
-    tfMat.Scale(300);
+    tfMat.Translate(viewport.xRes/2 ,viewport.yRes/2, 0);
+
+    tfMat.Scale(100);
+
     for(int i = 0; i < in.vertices.size(); ++i) {
         vec4f tfVec;
         tfVec.data = {

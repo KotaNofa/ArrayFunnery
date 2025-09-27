@@ -1,8 +1,6 @@
 #ifndef VIEWPORT_H
 #define VIEWPORT_H
 
-#include "../globals.h"
-
 #include <vector>
 
 
@@ -11,7 +9,6 @@ class Viewport {
     float xRes, yRes;
     float x, y, z;
     float rx, ry, rz;
-
     Viewport();
 
     void TranslateX(float input);
