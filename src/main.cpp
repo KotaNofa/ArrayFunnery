@@ -3,7 +3,6 @@
 #include "globals.h"
 #include "gfx/render.h"
 #include "gfx/parser.h"
-#include "math/mat4.h"
 
 #include <cmath>
 #include <iostream>
@@ -19,14 +18,8 @@ int main() {
     if (!texture.loadFromFile("assets/texture/triCube.png")) {
     }
 
-    mat4f mat1;
-    mat1.Scale(500);
-    mat1.Translate(5,5,5);
-    mat1.print();
-
     Viewport camera;
 
-    // draw window
     sf::RenderWindow window(sf::VideoMode(winWidth, winHeight), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     

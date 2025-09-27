@@ -42,6 +42,18 @@ vec4f vec4f::operator-=(const vec4f& in){
     }};
 }
 
+vec4f vec4f::operator*=(const mat4f &in)
+{
+    vec4f orig = *this; // keep the original values
+    for (int r = 0; r < 4; ++r) {
+        data[r] =
+            in.data[0*4 + r] * orig.data[0] +
+            in.data[1*4 + r] * orig.data[1] +
+            in.data[2*4 + r] * orig.data[2] +
+            in.data[3*4 + r] * orig.data[3];
+    }
+    return *this;
+}
 mat4f::mat4f() {
     data = {
         1,0,0,0,
@@ -77,10 +89,6 @@ void mat4f::Translate(float x, float y, float z) {
 
 }
 
-void mat4f::Project(float fov, float aspect, float z_near, float z_far) {
-
-}
-
 const void mat4f::print() {
     // 0,4,8,12, 1,5,9,13, 2,6,10,14, 3,7,11,15
     for (int row = 0; row < 4; ++row) {
@@ -93,15 +101,16 @@ const void mat4f::print() {
 
 
 mat4f mat4f::operator*=(const mat4f& in) {
-    mat4f lhs = *this; // copy of original left-hand matrix
+    mat4f temp = *this;
     for (int row = 0; row < 4; ++row) {
         for (int col = 0; col < 4; ++col) {
             float sum = 0.0f;
             for (int k = 0; k < 4; ++k) {
-                sum += lhs.data[k*4 + row] * in.data[col*4 + k];
+                sum += temp.data[k*4 + row] * in.data[col*4 + k];
             }
             this->data[col*4 + row] = sum;
         }
     }
     return *this;
-}
+};
+

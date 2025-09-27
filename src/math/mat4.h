@@ -4,17 +4,6 @@
 #include <iostream>
 #include <array>
 
-class vec4f {
-    public:
-    std::array<float, 4>data;
-    const void print();
-    vec4f operator+(const vec4f& in);
-    vec4f operator+=(const vec4f& in);
-    vec4f operator-(const vec4f& in);
-    vec4f operator-=(const vec4f& in);
-    vec4f 
-};
-
 class mat4f {
     public:
     std::array<float, 16>data;
@@ -26,5 +15,15 @@ class mat4f {
     mat4f operator*=(const mat4f& in);
 };
 
+class vec4f {
+    public:
+    std::array<float, 4>data;
+    const void print();
+    vec4f operator+(const vec4f& in);
+    vec4f operator+=(const vec4f& in);
+    vec4f operator-(const vec4f& in);
+    vec4f operator-=(const vec4f& in);
+    vec4f operator*=(const mat4f& in); 
+};
 
 #endif
