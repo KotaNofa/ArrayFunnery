@@ -1,5 +1,6 @@
 #include "mat4.h" 
 
+
 const void vec4f::print() {
     for (int col = 0; col < 4; ++col) {
         std::cout << data[col] << std::endl;

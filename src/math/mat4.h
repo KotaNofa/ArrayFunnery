@@ -17,6 +17,7 @@ class mat4f {
 
 class vec4f {
     public:
+    
     std::array<float, 4>data;
     const void print();
     vec4f operator+(const vec4f& in);

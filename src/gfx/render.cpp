@@ -21,10 +21,23 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
     }
 }
 
-void Transform(Model model, Viewport viewport) {
+
+
+void Transform(Model& in, const Viewport& viewport) {
     mat4f tfMat;
-    tfMat.Scale(5);
-    // Scale
+    tfMat.Translate(500,500,0);
+    tfMat.Scale(300);
+    for(int i = 0; i < in.vertices.size(); ++i) {
+        vec4f tfVec;
+        tfVec.data = {
+            in.vertices[i].geometricCoord.x, in.vertices[i].geometricCoord.y,in.vertices[i].geometricCoord.z, 1
+        };
+        tfVec *= tfMat;
+        
+        in.vertices[i].geometricCoord.x = tfVec.data[0];
+        in.vertices[i].geometricCoord.y = tfVec.data[1];
+        in.vertices[i].geometricCoord.z = tfVec.data[2];
+    }
     // Cull Backface
     // Sort Remaining
     // Scale

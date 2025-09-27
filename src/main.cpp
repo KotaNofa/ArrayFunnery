@@ -14,8 +14,8 @@ int main() {
 
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("assets/model/triCube.obj");
-    if (!texture.loadFromFile("assets/texture/triCube.png")) {
+    cube.InitFromOBJ("assets/model/laikaRig.obj");
+    if (!texture.loadFromFile("assets/texture/laikaUV.png")) {
     }
 
     Viewport camera;
