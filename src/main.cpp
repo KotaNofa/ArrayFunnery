@@ -16,7 +16,7 @@ int main() {
     float camSpeed = 5.f;
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("assets/model/triCube.obj");
+    cube.InitFromOBJ("assets/model/laikaRig.obj");
     texture.loadFromFile("assets/texture/laikaUV.png");
 
     const unsigned int xRes = 1920;
