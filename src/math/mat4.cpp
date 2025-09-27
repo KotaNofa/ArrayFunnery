@@ -52,20 +52,29 @@ mat4f::mat4f() {
 }
 
 void mat4f::Scale(float amount) {
-    data[0]*=amount;
-    data[4]*=amount;
-    data[8]*=amount;
-    data[12]*=amount;    
-}
 
-void mat4f::Rotate(float rx, float ry, float rz) {
+    mat4f temp;
+    temp.data = {
+        amount,0,0,0,
+        0,amount,0,0,
+        0,0,amount,0,
+        0,0,0,1
+    };
     
+    *this *= temp;
 }
 
 void mat4f::Translate(float x, float y, float z) {
-    data[12]+=x; 
-    data[13]+=y;
-    data[14]+=z;
+    mat4f temp;
+    temp.data = {
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        x,y,z,1
+    };
+
+    *this *= temp;
+
 }
 
 void mat4f::Project(float fov, float aspect, float z_near, float z_far) {
@@ -82,24 +91,17 @@ const void mat4f::print() {
     }
 };
 
-mat4f mat4f::operator+=(const mat4f& in) {
-    /* return mat4f {
-        data[0] += in.data[0],
-        data[1] += in.data[1],
-        data[2] += in.data[2],
-        data[3] += in.data[3],
-        data[4] += in.data[4],
-        data[5] += in.data[5],
-        data[5] += in.data[6],
-        data[7] += in.data[7],
-        data[8] += in.data[8],
-        data[9] += in.data[9],
-        data[10] += in.data[10],
-        data[11] += in.data[11],
-        data[12] += in.data[12],
-        data[13] += in.data[13],
-        data[14] += in.data[14],
-        data[15] += in.data[15]
-    }; */
-}
 
+mat4f mat4f::operator*=(const mat4f& in) {
+    mat4f lhs = *this; // copy of original left-hand matrix
+    for (int row = 0; row < 4; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            float sum = 0.0f;
+            for (int k = 0; k < 4; ++k) {
+                sum += lhs.data[k*4 + row] * in.data[col*4 + k];
+            }
+            this->data[col*4 + row] = sum;
+        }
+    }
+    return *this;
+}

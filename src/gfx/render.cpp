@@ -22,6 +22,9 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
 }
 
 void Transform(Model model, Viewport viewport) {
+    mat4f tfMat;
+    tfMat.Scale(5);
+    // Scale
     // Cull Backface
     // Sort Remaining
     // Scale

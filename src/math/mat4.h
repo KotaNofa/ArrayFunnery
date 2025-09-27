@@ -12,6 +12,7 @@ class vec4f {
     vec4f operator+=(const vec4f& in);
     vec4f operator-(const vec4f& in);
     vec4f operator-=(const vec4f& in);
+    vec4f 
 };
 
 class mat4f {
@@ -19,12 +20,11 @@ class mat4f {
     std::array<float, 16>data;
     mat4f();
     void Scale(float amount);
-    void Rotate(float rx, float ry, float rz);
     void Translate(float x, float y, float z);
     void Project(float fov, float aspect, float z_near, float z_far);
     const void print();
-    mat4f operator+=(const mat4f& in);
     mat4f operator*=(const mat4f& in);
 };
+
 
 #endif

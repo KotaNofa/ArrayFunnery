@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "gfx/render.h"
 #include "gfx/parser.h"
+#include "math/mat4.h"
 
 #include <cmath>
 #include <iostream>
@@ -17,6 +18,11 @@ int main() {
     cube.InitFromOBJ("assets/model/triCube.obj");
     if (!texture.loadFromFile("assets/texture/triCube.png")) {
     }
+
+    mat4f mat1;
+    mat1.Scale(500);
+    mat1.Translate(5,5,5);
+    mat1.print();
 
     Viewport camera;
 
