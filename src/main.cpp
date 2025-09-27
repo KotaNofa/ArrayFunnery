@@ -55,12 +55,22 @@ int main() {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
                     camera.TranslateX(camSpeed);
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
                     camera.TranslateY(-camSpeed);
                 }
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                     camera.TranslateY(camSpeed);
                 }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
+                    camera.RotateY(camSpeed);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
+                    camera.RotateY(camSpeed);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
+                    camera.RotateX(camSpeed);
+                }
+
             }
         }
 

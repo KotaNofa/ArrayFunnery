@@ -45,7 +45,7 @@ vec4f vec4f::operator-=(const vec4f& in){
 
 vec4f vec4f::operator*=(const mat4f &in)
 {
-    vec4f orig = *this; // keep the original values
+    vec4f orig = *this;
     for (int r = 0; r < 4; ++r) {
         data[r] =
             in.data[0*4 + r] * orig.data[0] +
@@ -93,7 +93,7 @@ void mat4f::RotateX(float x)
     mat4f temp;
     temp.data = {
         1,0,0,0,
-        0,cos(x),-sin(x),0,
+        0,cos(x),sin(x),0,
         0,-sin(x),cos(x),0,
         0,0,0,1
     };
@@ -123,6 +123,18 @@ void mat4f::RotateZ(float z)
     };
     *this *= temp;
 }
+void mat4f::Project(float fov, float aspect, float z_near, float z_far)
+{
+    mat4f temp;
+    temp.data = {
+        1/((aspect)*tan(fov/2)), 0,0,0,
+        0,1/(tan(fov/2)),0,0,
+        0,0,-(z_far + z_near)/(z_far-z_near),-1,
+        0,0,(2*z_far*z_near)/(z_far-z_near),0
+    };
+    *this *= temp;
+}
+
 const void mat4f::print()
 {
     // 0,4,8,12, 1,5,9,13, 2,6,10,14, 3,7,11,15
