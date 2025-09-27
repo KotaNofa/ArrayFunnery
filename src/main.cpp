@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "gfx/render.h"
 #include "gfx/parser.h"
+#include "math/mat4.h"
 
 #include <cmath>
 #include <iostream>
@@ -14,7 +15,7 @@ int main() {
 
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("assets/model/laikaRig.obj");
+    cube.InitFromOBJ("assets/model/cube.obj");
     if (!texture.loadFromFile("assets/texture/laikaUV.png")) {
     }
 
@@ -24,6 +25,13 @@ int main() {
     window.setFramerateLimit(60);
     
     while (window.isOpen()) {
+
+        float spin = 0.1;
+        camera.RotateX(spin);
+        camera.RotateY(spin);
+        camera.RotateZ(spin);
+        spin += 0.1;
+
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)

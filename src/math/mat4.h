@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <array>
+#include <math.h>
 
 class mat4f {
     public:
@@ -10,6 +11,9 @@ class mat4f {
     mat4f();
     void Scale(float amount);
     void Translate(float x, float y, float z);
+    void RotateX(float x);
+    void RotateY(float y);
+    void RotateZ(float z);
     void Project(float fov, float aspect, float z_near, float z_far);
     const void print();
     mat4f operator*=(const mat4f& in);
@@ -17,7 +21,6 @@ class mat4f {
 
 class vec4f {
     public:
-    
     std::array<float, 4>data;
     const void print();
     vec4f operator+(const vec4f& in);

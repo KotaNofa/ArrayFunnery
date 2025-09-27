@@ -85,12 +85,46 @@ void mat4f::Translate(float x, float y, float z) {
         0,0,1,0,
         x,y,z,1
     };
-
     *this *= temp;
-
 }
 
-const void mat4f::print() {
+void mat4f::RotateX(float x)
+{
+    mat4f temp;
+    temp.data = {
+        1,0,0,0,
+        0,cos(x),-sin(x),0,
+        0,-sin(x),cos(x),0,
+        0,0,0,1
+    };
+    *this *= temp;
+}
+
+void mat4f::RotateY(float y)
+{
+    mat4f temp;
+    temp.data = {
+        cos(y),0,-sin(y),0,
+        0,1,0, 0,
+        sin(y),0,cos(y),0,
+        0,0,0,1
+    };
+    *this *= temp;
+}
+
+void mat4f::RotateZ(float z)
+{
+    mat4f temp;
+    temp.data = {
+        cos(z),sin(z),0,0,
+        -sin(z),cos(z),0,0,
+        0,0,1,0,
+        0,0,0,1
+    };
+    *this *= temp;
+}
+const void mat4f::print()
+{
     // 0,4,8,12, 1,5,9,13, 2,6,10,14, 3,7,11,15
     for (int row = 0; row < 4; ++row) {
         for (int col = 0; col < 4; ++col) {
@@ -99,7 +133,6 @@ const void mat4f::print() {
         std::cout << std::endl;
     }
 };
-
 
 mat4f mat4f::operator*=(const mat4f& in) {
     mat4f temp = *this;
