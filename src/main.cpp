@@ -18,8 +18,15 @@ int main() {
     Model cube;
     sf::Texture texture;
 
-    cube.InitFromOBJ("assets/model/triCube.obj");
-    texture.loadFromFile("assets/texture/triCube.png");
+    std::string  modeltoload;
+    std::string  txtrtoload;
+    std::cout << "name of model to load: " << std::endl;
+    std::cin >> modeltoload;
+    std::cout << "name of texture to load: " << std::endl;
+    std::cin >> txtrtoload;
+
+    cube.InitFromOBJ("assets/model/" + modeltoload + ".obj");
+    texture.loadFromFile("assets/texture/" + txtrtoload + ".png");
 
     const unsigned int xRes = 1080;
     const unsigned int yRes = 1080;
@@ -32,11 +39,12 @@ int main() {
     std::string rotate = "Rotate: IJKL";
     std::string scale = "Dash, Equals";
     std::string spinny = "Spin: B,N";
+    std::string tris = "Triangles: " + std::to_string(cube.vertices.size()/3);
     controls.setPosition(10.f, 10.f);
     controls.setFillColor(sf::Color::White);
     controls.setFont(boubas);
     controls.setCharacterSize(40);
-    controls.setString(move + "\n" + rotate + "\n" + scale + "\n" + spinny);
+    controls.setString(move + "\n" + rotate + "\n" + scale + "\n" + spinny + "\n" + tris);
 
     bool spin = false;
 
