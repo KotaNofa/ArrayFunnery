@@ -21,15 +21,16 @@ void InsertModelIntoVertexArray(Model& input, sf::VertexArray& vertHeap) {
     }
 }
 
+
+
 void Transform(Model& in, const Viewport& viewport, sf::Texture texture) {
-    
+
     mat4f tfMat;
-    tfMat.Scale(500);
+    tfMat.Translate(viewport.x, viewport.y, viewport.z);    
     tfMat.RotateX(viewport.rx);
     tfMat.RotateY(viewport.ry);
     tfMat.RotateZ(viewport.rz);
-    tfMat.Translate(viewport.x, viewport.y, viewport.z); 
-    tfMat.Project(90,1.5,0.1,10);
+    tfMat.Scale(500);
     
     for(int i = 0; i < in.vertices.size(); ++i) {
         vec4f tfVec;

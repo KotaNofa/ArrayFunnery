@@ -24,7 +24,7 @@ int main() {
 
     sf::RenderWindow window(sf::VideoMode(xRes, yRes), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
-    sf::Color clearColor(128, 224, 197);
+    sf::Color clearColor = {64, 64, 64};
     bool handleInput = false;
 
     while (window.isOpen()) {
@@ -32,11 +32,11 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
             if (event.type == sf::Event::LostFocus) {
-                clearColor = {0,0,0};
+                clearColor = {64, 64, 64};
                 handleInput = false;
             }
             if (event.type == sf::Event::GainedFocus) {
-                clearColor = {128, 224, 197};
+                clearColor = {64, 64, 64};
                 handleInput = true;
             }
             if (handleInput) {
