@@ -16,10 +16,10 @@ int main() {
     float camSpeed = 5.f;
     Model cube;
     sf::Texture texture;
-    cube.InitFromOBJ("assets/model/laikaRig.obj");
-    texture.loadFromFile("assets/texture/laikaUV.png");
+    cube.InitFromOBJ("assets/model/triCube.obj");
+    texture.loadFromFile("assets/texture/triCube.png");
 
-    const unsigned int xRes = 1920;
+    const unsigned int xRes = 1080;
     const unsigned int yRes = 1080;
 
     sf::RenderWindow window(sf::VideoMode(xRes, yRes), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
