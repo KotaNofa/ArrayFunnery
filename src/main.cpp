@@ -37,7 +37,7 @@ int main() {
     sf::Text controls;
     std::string move = "Move: WASD, Space, LShift";
     std::string rotate = "Rotate: IJKL";
-    std::string scale = "Dash, Equals";
+    std::string scale = "Scale: Dash, Equals";
     std::string spinny = "Spin: B,N";
     std::string tris = "Triangles: " + std::to_string(cube.vertices.size()/3);
     controls.setPosition(10.f, 10.f);
