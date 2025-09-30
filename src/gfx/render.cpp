@@ -30,7 +30,7 @@ void Transform(Model& in, const Viewport& viewport, sf::Texture texture) {
     tfMat.RotateX(viewport.rx);
     tfMat.RotateY(viewport.ry);
     tfMat.RotateZ(viewport.rz);
-    tfMat.Scale(250);
+    tfMat.Scale(viewport.scale);
     
     for(int i = 0; i < in.vertices.size(); ++i) {
         vec4f tfVec;

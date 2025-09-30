@@ -7,6 +7,7 @@ Viewport::Viewport() {
     rx = 0;
     ry = 0;
     rz = 0;
+    scale = 100;
 };
 
 void Viewport::TranslateX(float input) {
@@ -26,4 +27,7 @@ void Viewport::RotateY(float input) {
 };
 void Viewport::RotateZ(float input) {
     rz += input;
+}
+void Viewport::Scale(float input) {
+    scale += input;
 };

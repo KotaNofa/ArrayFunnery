@@ -9,6 +9,7 @@
 #include <sstream>
 #include <thread>
 #include <chrono>
+#include <string>
 
 int main() {
 
@@ -16,38 +17,44 @@ int main() {
     float camSpeed = 5.f;
     Model cube;
     sf::Texture texture;
+
     cube.InitFromOBJ("assets/model/triCube.obj");
     texture.loadFromFile("assets/texture/triCube.png");
 
     const unsigned int xRes = 1080;
     const unsigned int yRes = 1080;
 
+    sf::Font boubas;
+    if (!boubas.loadFromFile("assets/font/boubasfont.ttf")) {
+    }
+    sf::Text controls;
+    std::string move = "Move: WASD, Space, LShift";
+    std::string rotate = "Rotate: IJKL";
+    std::string scale = "Dash, Equals";
+    std::string spinny = "Spin: B,N";
+    controls.setPosition(10.f, 10.f);
+    controls.setFillColor(sf::Color::White);
+    controls.setFont(boubas);
+    controls.setCharacterSize(40);
+    controls.setString(move + "\n" + rotate + "\n" + scale + "\n" + spinny);
+
+    bool spin = false;
+
     sf::RenderWindow window(sf::VideoMode(xRes, yRes), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
     window.setFramerateLimit(60);
     sf::Color clearColor = {64, 64, 64};
-    bool handleInput = false;
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) window.close();
-            if (event.type == sf::Event::LostFocus) {
-                clearColor = {64, 64, 64};
-                handleInput = false;
-            }
-            if (event.type == sf::Event::GainedFocus) {
-                clearColor = {64, 64, 64};
-                handleInput = true;
-            }
-            if (handleInput) {
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                     window.close();
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
-                    camera.TranslateZ(camSpeed);
+                    // camera.TranslateZ(camSpeed);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-                    camera.TranslateZ(-camSpeed);
+                    // camera.TranslateZ(-camSpeed);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
                     camera.TranslateX(-camSpeed);
@@ -62,19 +69,44 @@ int main() {
                     camera.TranslateY(camSpeed);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::I)) {
-                    camera.RotateY(camSpeed);
+                    camera.RotateX(camSpeed/0.2);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::K)) {
-                    camera.RotateY(camSpeed);
+                    camera.RotateX(-camSpeed/0.2);
                 }
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-                    camera.RotateX(camSpeed);
+                    camera.RotateY(camSpeed/0.2);
                 }
-
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::L)) {
+                    camera.RotateY(-camSpeed/0.2);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
+                    camera.RotateZ(camSpeed/0.2);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::O)) {
+                    camera.RotateZ(-camSpeed/0.2);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal)) {
+                    camera.Scale(+50);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Dash)) {
+                    camera.Scale(-50);
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+                    spin = true;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+                    spin = false;
+                }
             }
-        }
+
+            if(spin){
+                camera.RotateX(0.05 * M_2_PI);
+                camera.RotateY(0.05 * M_2_PI + 0.05);
+            }
 
         window.clear(clearColor);
+        window.draw(controls);
         DrawModelGeometricVerts(cube, texture,  camera, window);
 
         window.display();

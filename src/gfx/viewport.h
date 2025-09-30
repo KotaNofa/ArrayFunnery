@@ -9,6 +9,7 @@ class Viewport {
     float xRes, yRes;
     float x, y, z;
     float rx, ry, rz;
+    float scale;
     Viewport();
 
     void TranslateX(float input);
@@ -17,6 +18,7 @@ class Viewport {
     void RotateX(float input);
     void RotateY(float input);
     void RotateZ(float input);
+    void Scale(float input);
 
 };
 
