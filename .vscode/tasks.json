@@ -14,7 +14,7 @@
                 "src/gfx/render.cpp",
                 "src/math/mat4.cpp",
                 "-o",
-                "Koka3D",
+                "Koka3D.lnx",
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system"
