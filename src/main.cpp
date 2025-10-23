@@ -7,9 +7,8 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
-#include <thread>
-#include <chrono>
 #include <string>
+#include <chrono>
 
 int main() {
 
@@ -44,8 +43,6 @@ int main() {
     controls.setFillColor(sf::Color::White);
     controls.setFont(boubas);
     controls.setCharacterSize(40);
-    controls.setString(move + "\n" + rotate + "\n" + scale + "\n" + spinny + "\n" + tris);
-
     bool spin = false;
 
     sf::RenderWindow window(sf::VideoMode(xRes, yRes), "Koka3D", sf::Style::Titlebar | sf::Style::Close);
@@ -114,8 +111,15 @@ int main() {
             }
 
         window.clear(clearColor);
-        window.draw(controls);
+
+        auto start = std::chrono::high_resolution_clock::now();
         DrawModelGeometricVerts(cube, texture,  camera, window);
+        auto end = std::chrono::high_resolution_clock::now(); 
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+        std::string frametime = std::to_string(duration.count()) + " ms";
+
+        controls.setString(move + "\n" + rotate + "\n" + scale + "\n" + spinny + "\n" + tris + "\n" + frametime);
+        window.draw(controls);
 
         window.display();
     }
