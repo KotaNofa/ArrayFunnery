@@ -9,7 +9,7 @@
             "preLaunchTask": "build",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/Koka3D.lnx",
+            "program": "${workspaceFolder}/koka3D.lnx",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
