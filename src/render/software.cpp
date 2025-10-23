@@ -1,11 +1,12 @@
 
 #include "software.h"
-#include "../math/mat4.h"
+#include "math/mat4.h"
 #include "SFML/Graphics.hpp"
 
 #include <vector>
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 
 void CopyInputIntoBuffer(const Model& input, Model& output) {
     for (int vertIndex = 0; vertIndex < input.vertices.size(); vertIndex++) {
@@ -47,12 +48,6 @@ void Transform(Model& in, const Viewport& viewport, sf::Texture texture) {
         in.vertices[i].geometricCoord.z = tfVec.data[2];
     }
 }
-
-// ------------------------------------------------------------
-// [ChatGPT Addition] Triangle sorting helper (Painter's Algorithm)
-// Marked for review later.
-// ------------------------------------------------------------
-#include <algorithm>
 
 struct Triangle {
     sf::Vertex v0, v1, v2;
