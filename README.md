@@ -2,21 +2,21 @@ koka3D is a software rasterizer I wrote to better understand the math behind 3D 
 
 <img src="meta/chair.png" alt="Image of chair" width="400"/> <img src="meta/laika.png" alt="Image of laika" width="400"/>
 
-Features:
-    Load any model through OBJ Parsing.
-    Load any texture to any model.
-    Controls to transform the model.
-    Performance metrics.
+Features: 
+- Load any model through OBJ Parsing.  
+- Load any texture to any model.  
+- Controls to transform the model.  
+- Performance metrics.
 
-Usage:
-    Open the binary through the executable
-    Input a model located in assets/model/
-    Input a texture located in texture/
+Usage: 
+- Open the binary through the executable  
+- Input a model located in assets/model/  
+- Input a texture located in texture/
 
-Dependencies:
-    SFML 2.6.2
+Dependencies:  
+- SFML 2.6.2
 
 Credits:
-    "laika" created by Laika.
-    Other models and textures are original.
-    SFML 2.6.2 licensed under zlib
+- "laika" created by Laika.
+- Other models and textures are original.  
+- SFML 2.6.2 licensed under zlib
