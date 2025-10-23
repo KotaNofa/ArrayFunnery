@@ -1,17 +1,8 @@
 #include "model.h"
-#include "parser.h"
+#include "parser/obj.h"
 #include "viewport.h"
 
 #include <SFML/Graphics.hpp>
-
-#include <fstream>
-#include <vector>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <chrono>
-#include <array>
-#include <thread>
 
 Model::Model() {
 };
@@ -22,11 +13,6 @@ void Model::InitFromOBJ(std::string dirName) {
 
 
 /*
-void Model::ObjParse(std::string dirName, Model& output) {
-    std::cout << "please dont use this member function: ObjParse!" << std::endl;
-};
-
-
 // Multithreaded model loader. Shouldn't be too tough to adapt it to other file types. 
 void Scene::loadModels(const std::string manifest) {
 

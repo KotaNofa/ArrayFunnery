@@ -1,8 +1,8 @@
-#ifndef RENDER_H
-#define RENDER_H
+#ifndef SOFTWARE_H
+#define SOFTWARE_H
 
-#include "model.h"
-#include "viewport.h"
+#include "struct/model.h"
+#include "struct/viewport.h"
 
 #include "SFML/Graphics.hpp"
 

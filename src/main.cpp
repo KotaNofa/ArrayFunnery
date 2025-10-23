@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 
-#include "gfx/render.h"
-#include "gfx/parser.h"
+#include "render/software.h"
+#include "parser/obj.h"
 #include "math/mat4.h"
 
 #include <cmath>

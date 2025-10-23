@@ -1,7 +1,7 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef OBJ_H
+#define OBJ_H
 
-#include "model.h"
+#include "struct/model.h"
 
 #include <string>
 

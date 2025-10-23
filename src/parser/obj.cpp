@@ -1,5 +1,5 @@
-#include "parser.h"
-#include "model.h"
+#include "parser/obj.h"
+#include "struct/model.h"
 
 #include <array>
 #include <vector>
