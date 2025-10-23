@@ -3,7 +3,7 @@ This project required me to understand applications of data structures, linear a
 
 My own library handles parsing, matrices, transformation, uv application, and sorting. SFML handles input and the window context.
 
-<img src="meta/chair.png" alt="Image of chair" width="400"/> <img src="meta/laika.png" alt="Image of laika" width="400"/>
+<img src="meta/chair.png" alt="Image of chair" width="250"/> <img src="meta/laika.png" alt="Image of laika" width="250"/>
 
 Features: 
 - Load any model through OBJ Parsing.  
