@@ -1,7 +1,9 @@
-koka3D is a software rasterizer I wrote to better understand the 3D graphics pipeline.  
-This project required me to understand applications of data structures, linear algebra, data-stream interpretation, input handling, and more.  
+koka3D is a rendering program I wrote to better understand the math behind the graphics pipeline.
+Most of the math is done on the CPU, which includes parsing, assembly, vertex transformations, and z-sorting.
+Actual drawing is done by SFML's DrawTriangles function.
 
-My own library handles parsing, matrices, transformation, uv application, and sorting. SFML handles input and the window context.
+This project required me to understand applications of data structures, linear algebra, data-stream interpretation, and input handling.
+Some fun challenges were parsing, matrices, and UV application, and sorting.
 
 <img src="meta/chair.png" alt="Image of chair" width="250"/> <img src="meta/laika.png" alt="Image of laika" width="250"/>
 
