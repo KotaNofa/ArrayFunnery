@@ -23,5 +23,4 @@ Dependencies:
 
 Credits:
 - "laika" created by Laika.
-- Other models and textures are original.  
-- SFML 2.6.2 licensed under zlib
+- Other models and textures are original.

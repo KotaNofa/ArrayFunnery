@@ -87,8 +87,6 @@ void DrawModelGeometricVerts(const Model& model, sf::Texture texture, const View
 
     Transform(modelBuffer, viewport, texture);
     
-    // This next sorting part was done by GPT because I'm sick of this project :(
-    // TODO: Learn how to sort triangles.
     auto tris = SortTrianglesByDepth(modelBuffer);
     sf::VertexArray vertHeap(sf::Triangles);
     for (auto& t : tris) {
